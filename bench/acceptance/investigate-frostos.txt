@@ -1,0 +1,21 @@
+# Read-only fan-out against a real repository, to capture /effort with several live workers.
+wait: (Ctrl|esc|›|▌|to send)
+sleep: 2
+send: Investigate only - change no files. I need three things answered in parallel: (1) where the display refresh and frame timing are implemented, (2) how screens are created and destroyed and whether anything is leaked per open/close cycle, (3) what the heap/PSRAM instrumentation reports and where it lives. Then give me your best root-cause hypothesis for FPS degrading after repeatedly opening and closing apps.
+waitfor: 240 (Spawned|explorer|debugger|worker|Exploring)
+sleep: 8
+mark: ---- /effort with live workers (1) ----
+send: /effort
+sleep: 12
+mark: ---- /effort with live workers (2) ----
+send: /effort
+sleep: 12
+mark: ---- /effort agents ----
+send: /effort agents
+sleep: 10
+waitfor: 900 (hypothesis|root cause|Conclusion|summary)
+mark: ---- /effort all at the end ----
+send: /effort all
+sleep: 10
+mark: ---- end ----
+quit

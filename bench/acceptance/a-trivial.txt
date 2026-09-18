@@ -1,0 +1,11 @@
+# Acceptance A: a trivial change must not summon a swarm.
+wait: (Ctrl|esc|›|▌|to send)
+sleep: 2
+send: Change the button label "Sav Changes" to "Save Changes" in this repo. Nothing else.
+waitfor: 420 (Save Changes|saved|updated|done|complete)
+sleep: 3
+mark: ---- /effort after the trivial task ----
+send: /effort
+sleep: 8
+mark: ---- end ----
+quit

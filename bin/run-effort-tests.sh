@@ -22,12 +22,13 @@ cargo fmt --all -- --check
 say "Our /effort tests"
 cargo test -p codex-tui --lib -- \
   effort_status \
-  slash_command::tests \
-  --nocapture
+  effort_command \
+  slash_command::tests
 
 say "Neighbouring upstream TUI suites"
 cargo test -p codex-tui --lib -- \
   bottom_pane::chat_composer \
+  bottom_pane::command_popup \
   chatwidget::tests::slash_commands \
   status::tests
 

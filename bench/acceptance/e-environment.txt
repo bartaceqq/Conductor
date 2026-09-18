@@ -1,0 +1,11 @@
+# Acceptance E: a missing build tool is an environment failure, not a reason to escalate.
+wait: (Ctrl|esc|›|▌|to send)
+sleep: 2
+send: Run this project's test suite exactly as README.md documents and tell me whether the code is correct. If the suite cannot run, say why and stop.
+waitfor: 420 (not found|ENVIRONMENT|cannot run|unavailable|missing|no such)
+sleep: 4
+mark: ---- /effort all after the environment failure ----
+send: /effort all
+sleep: 10
+mark: ---- end ----
+quit

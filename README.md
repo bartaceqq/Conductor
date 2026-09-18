@@ -436,6 +436,8 @@ Useful when a rebase conflicts. Everything is in `codex/codex-rs/tui/`:
 | `src/app_event.rs` | `RequestEffortStatus`, `EffortStatusLoaded`, `EffortStatusReadout` |
 | `src/chatwidget/slash_dispatch.rs` | dispatch for bare and inline `/effort`, queue classification |
 | `src/app/event_dispatch.rs` | routes the two new events |
+| `src/bottom_pane/chat_composer.rs` | keeps `/effort` usable on a parent-owned child thread |
+| `src/bottom_pane/snapshots/…command_popup_default_items.snap` | `/effort` now appears in the popup listing |
 | `src/lib.rs`, `src/app.rs`, `src/chatwidget.rs` | module registration |
 
 No change to `codex-rs/core`, `codex-rs/app-server` or `codex-rs/app-server-protocol`: `/effort`

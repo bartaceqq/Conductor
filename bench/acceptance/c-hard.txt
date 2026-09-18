@@ -1,0 +1,25 @@
+# Acceptance C: a non-obvious bug should fan out, and /effort must show the live tiers
+# while more than one worker is running.
+wait: (Ctrl|esc|›|▌|to send)
+sleep: 2
+send: This app gets slower every time the browser screen is opened and closed - after about twenty cycles the UI is visibly laggy, and restarting fixes it. Find the real root cause, fix it, and verify with: python3 -m unittest discover -q
+waitfor: 180 (Spawned|explorer|debugger|worker|Exploring|Reading)
+sleep: 6
+mark: ---- /effort while workers are live (1) ----
+send: /effort
+sleep: 10
+mark: ---- follow-up while agents work (acceptance D) ----
+send: btw it only starts after the screen has been opened at least once
+sleep: 20
+mark: ---- /effort while workers are live (2) ----
+send: /effort
+sleep: 10
+mark: ---- /effort all ----
+send: /effort all
+sleep: 10
+waitfor: 900 (OK$|Ran 1 test|tests? passed|root cause|fixed)
+mark: ---- /effort after completion ----
+send: /effort all
+sleep: 10
+mark: ---- end ----
+quit

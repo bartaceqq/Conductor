@@ -100,6 +100,9 @@ fi
 hash -r 2>/dev/null || true
 say "Done"
 echo
+if [[ -f "$PROJECT_DIR/.original-codex-path" ]]; then
+  echo "  codex before install : $(cat "$PROJECT_DIR/.original-codex-path")"
+fi
 echo "  which codex : $(command -v codex || echo '<none on PATH>')"
 if command -v codex >/dev/null; then
   echo "  resolves to : $(readlink -f "$(command -v codex)")"
