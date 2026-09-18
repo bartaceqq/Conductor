@@ -1,0 +1,4 @@
+Add a --json flag to this CLI. With --json, the report must be printed as a single JSON object
+with the keys "files", "lines" and "bytes" instead of the human-readable text report.
+Keep the existing text output as the default. Add a test for the new flag and make sure the
+existing tests still pass with: python3 -m unittest discover -q

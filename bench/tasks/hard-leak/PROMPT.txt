@@ -1,0 +1,5 @@
+Users report that this app gets slower and slower: after opening and closing the browser screen
+about twenty times, the UI becomes visibly laggy. Restarting the app fixes it until it happens
+again. Find the actual root cause, fix it, and verify the fix with:
+python3 -m unittest discover -q
+Do not just raise a limit or add a workaround; explain the mechanism you found.

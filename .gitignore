@@ -1,0 +1,7 @@
+# The patched upstream source is its own git repository.
+codex/
+# Build output and generated artifacts.
+pkg/
+backup/
+bench/results/
+.original-codex-path

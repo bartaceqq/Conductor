@@ -1,0 +1,2 @@
+Run the project's test suite exactly as documented in README.md and report whether the code is
+correct. If the suite cannot run, say why and stop; do not rewrite the project to make it run.

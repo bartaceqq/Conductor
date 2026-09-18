@@ -1,0 +1,347 @@
+#!/usr/bin/env python3
+"""Discover the models this Codex account exposes and render the orchestrator agent roles.
+
+Nothing here hardcodes a model name. The tier -> model mapping lives in
+``~/.config/codex-orchestrator/config.toml`` and is created from the models Codex actually
+advertises on the first run; after that the file is authoritative, so editing it and re-running
+this script is the supported way to change which model a tier uses.
+
+Run with ``--check`` to print the resolved mapping without writing anything.
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime as _dt
+import json
+import os
+import re
+import shutil
+import sys
+from pathlib import Path
+
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+TEMPLATE_DIR = PROJECT_DIR / "agents"
+BACKUP_DIR = PROJECT_DIR / "backup"
+
+CODEX_HOME = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex"))
+CONFIG_HOME = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config"))
+ORCH_CONFIG = CONFIG_HOME / "codex-orchestrator" / "config.toml"
+
+BEGIN_MARKER = "# >>> codex-orchestrator >>>"
+END_MARKER = "# <<< codex-orchestrator <<<"
+
+TIERS = ("cheap", "general", "strong", "strongest")
+
+# role -> (tier, preferred reasoning effort)
+ROLES = {
+    "explorer_low": ("cheap", "low"),
+    "verifier_low": ("cheap", "low"),
+    "implementer_medium": ("general", "medium"),
+    "debugger_high": ("strong", "high"),
+    "architect_high": ("strongest", "high"),
+}
+
+EFFORT_ORDER = ["none", "minimal", "low", "medium", "high", "xhigh", "max", "ultra"]
+
+# Ordered strength hints taken from the descriptions Codex ships with each model. They only seed
+# the first run; the generated config file wins from then on.
+TIER_HINTS = {
+    "cheap": ("affordable", "fast and affordable", "mini", "lightweight"),
+    "general": ("balanced", "everyday", "general"),
+    "strong": ("frontier", "agentic coding", "latest"),
+    "strongest": ("most capable", "complex, demanding", "demanding work"),
+}
+
+
+def fail(message: str) -> "NoReturn":  # type: ignore[valid-type]
+    print(f"codex-orchestrator-sync: {message}", file=sys.stderr)
+    raise SystemExit(1)
+
+
+def load_models() -> list[dict]:
+    cache = CODEX_HOME / "models_cache.json"
+    if not cache.is_file():
+        fail(
+            f"no model cache at {cache}.\n"
+            "Start Codex once so it can fetch the model list for your account, then re-run this."
+        )
+    try:
+        data = json.loads(cache.read_text())
+    except json.JSONDecodeError as err:
+        fail(f"could not parse {cache}: {err}")
+    models = data.get("models")
+    if not isinstance(models, list) or not models:
+        fail(f"{cache} contains no models")
+    return models
+
+
+def selectable(models: list[dict]) -> list[dict]:
+    """Models that can back a subagent: advertised in the picker and multi-agent capable."""
+    out = []
+    for model in models:
+        if model.get("visibility") != "list":
+            continue
+        if model.get("multi_agent_version") in (None, "disabled"):
+            # A model the account cannot use as a subagent backend is useless to us.
+            continue
+        out.append(model)
+    return out
+
+
+def rank_key(model: dict) -> tuple:
+    # `priority` is Codex's own ordering; lower is more prominent.
+    return (model.get("priority", 10_000), model.get("slug", ""))
+
+
+def hint_score(model: dict, tier: str) -> int:
+    text = f"{model.get('display_name', '')} {model.get('description', '')}".lower()
+    for index, hint in enumerate(TIER_HINTS[tier]):
+        if hint in text:
+            return index
+    return len(TIER_HINTS[tier])
+
+
+def derive_mapping(models: list[dict]) -> dict[str, str]:
+    candidates = selectable(models) or [m for m in models if m.get("visibility") == "list"]
+    if not candidates:
+        fail("no usable models found in the Codex model cache")
+
+    mapping: dict[str, str] = {}
+    for tier in TIERS:
+        scored = sorted(candidates, key=lambda m: (hint_score(m, tier), *rank_key(m)))
+        best = scored[0]
+        if hint_score(best, tier) == len(TIER_HINTS[tier]):
+            # No description matched; fall back to Codex's own prominence ordering.
+            ordered = sorted(candidates, key=rank_key)
+            best = ordered[0] if tier in ("strong", "strongest") else ordered[-1]
+        mapping[tier] = best["slug"]
+    return mapping
+
+
+def supported_efforts(models: list[dict], slug: str) -> list[str]:
+    for model in models:
+        if model.get("slug") == slug:
+            levels = model.get("supported_reasoning_levels") or []
+            return [level.get("effort") for level in levels if level.get("effort")]
+    return []
+
+
+def nearest_effort(wanted: str, supported: list[str]) -> str | None:
+    if not supported:
+        return None
+    if wanted in supported:
+        return wanted
+    if wanted not in EFFORT_ORDER:
+        return supported[0]
+    target = EFFORT_ORDER.index(wanted)
+    ranked = [e for e in supported if e in EFFORT_ORDER]
+    if not ranked:
+        return supported[0]
+    return min(ranked, key=lambda e: (abs(EFFORT_ORDER.index(e) - target), EFFORT_ORDER.index(e)))
+
+
+def parse_config_mapping(path: Path) -> dict[str, str]:
+    """Reads the ``[models]`` table without needing a TOML parser from the stdlib on old Pythons."""
+    if not path.is_file():
+        return {}
+    try:
+        import tomllib  # Python 3.11+
+
+        data = tomllib.loads(path.read_text())
+        models = data.get("models", {})
+        return {tier: str(slug) for tier, slug in models.items() if tier in TIERS}
+    except ModuleNotFoundError:
+        pass
+    mapping: dict[str, str] = {}
+    in_models = False
+    for line in path.read_text().splitlines():
+        stripped = line.strip()
+        if stripped.startswith("["):
+            in_models = stripped == "[models]"
+            continue
+        if not in_models or "=" not in stripped or stripped.startswith("#"):
+            continue
+        key, _, value = stripped.partition("=")
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key in TIERS and value:
+            mapping[key] = value
+    return mapping
+
+
+def write_config(path: Path, mapping: dict[str, str], models: list[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    available = "\n".join(
+        f"#   {m['slug']:<22} {m.get('display_name', '')} — {m.get('description', '')}"
+        for m in models
+        if m.get("visibility") == "list"
+    )
+    path.write_text(
+        "# codex-orchestrator tier -> model mapping.\n"
+        "#\n"
+        "# This file is authoritative. Edit it and re-run:\n"
+        "#   ~/codex-orchestrator/bin/codex-orchestrator-sync\n"
+        "# to regenerate the agent role files under $CODEX_HOME/agents.\n"
+        "#\n"
+        "# Models this account currently advertises:\n"
+        f"{available}\n"
+        "\n"
+        "[models]\n"
+        + "".join(f'{tier} = "{mapping[tier]}"\n' for tier in TIERS)
+    )
+
+
+def render_roles(mapping: dict[str, str], models: list[dict], apply: bool) -> list[str]:
+    agents_dir = CODEX_HOME / "agents"
+    report = []
+    if apply:
+        agents_dir.mkdir(parents=True, exist_ok=True)
+    for role, (tier, wanted_effort) in sorted(ROLES.items()):
+        template = TEMPLATE_DIR / f"{role}.toml.tmpl"
+        if not template.is_file():
+            fail(f"missing role template {template}")
+        slug = mapping[tier]
+        supported = supported_efforts(models, slug)
+        effort = nearest_effort(wanted_effort, supported)
+        if effort is None:
+            fail(f"model {slug} advertises no reasoning levels; cannot configure {role}")
+        note = "" if effort == wanted_effort else f"  (requested {wanted_effort}, not supported)"
+        report.append(f"  {role:<20} {tier:<9} {slug:<22} {effort}{note}")
+        if not apply:
+            continue
+        rendered = (
+            template.read_text().replace("@@MODEL@@", slug).replace("@@EFFORT@@", effort)
+        )
+        (agents_dir / f"{role}.toml").write_text(rendered)
+    return report
+
+
+def backup(path: Path) -> Path | None:
+    if not path.is_file():
+        return None
+    BACKUP_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = _dt.datetime.now().strftime("%Y%m%d-%H%M%S")
+    target = BACKUP_DIR / f"{path.name}.{stamp}"
+    shutil.copy2(path, target)
+    return target
+
+
+def strip_managed_block(text: str) -> str:
+    pattern = re.compile(
+        re.escape(BEGIN_MARKER) + r".*?" + re.escape(END_MARKER) + r"\n?",
+        re.DOTALL,
+    )
+    return pattern.sub("", text)
+
+
+def upsert_managed_block(path: Path, block: str, apply: bool) -> None:
+    original = path.read_text() if path.is_file() else ""
+    stripped = strip_managed_block(original).rstrip()
+    managed = f"{BEGIN_MARKER}\n{block.strip()}\n{END_MARKER}\n"
+    updated = (stripped + "\n\n" if stripped else "") + managed
+    if updated == original:
+        return
+    if not apply:
+        return
+    backup(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(updated)
+
+
+def agents_config_block(max_agents: int) -> str:
+    return (
+        "# Multi-agent settings used by the codex-orchestrator routing setup.\n"
+        "# Remove this block (or run ~/codex-orchestrator/uninstall.sh) to restore the defaults.\n"
+        "[agents]\n"
+        "enabled = true\n"
+        f"max_concurrent_threads_per_session = {max_agents}\n"
+        "max_depth = 1\n"
+    )
+
+
+AGENTS_MD_BLOCK = """\
+## Subagent routing (codex-orchestrator)
+
+Delegate by difficulty, not by prompt length, and spend the cheapest tier that can do the job.
+These roles have their model and reasoning effort fixed in config, so `agent_type` picks the tier.
+
+- `explorer_low` — read-only investigation: locate code, trace call paths, find tests, read logs.
+  Spawn several in parallel for independent questions.
+- `verifier_low` — build, lint, test, inspect the diff, check acceptance criteria. It tags every
+  failure; only a `LOGIC_FAILURE` tag justifies escalating to a stronger model.
+- `implementer_medium` — ordinary implementation when the cause or spec is already known.
+- `debugger_high` — expensive. Only for a genuinely unknown root cause: races, deadlocks, leaks,
+  perf regressions, corruption, or a fix that already failed. Send a compact brief, not the repo.
+- `architect_high` — most expensive. Whole-system redesign or migration only.
+
+Trivial work (rename, one string, a small config edit, "where is X") is done directly — no agents.
+Escalate only the stuck branch, never the whole task. Readers parallelise; writers serialise.
+`/effort` shows what every live agent actually resolved to.
+"""
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="resolve and print the mapping without writing any file",
+    )
+    parser.add_argument(
+        "--max-agents",
+        type=int,
+        default=4,
+        help="value written to [agents].max_concurrent_threads_per_session (default: 4)",
+    )
+    parser.add_argument(
+        "--skip-config",
+        action="store_true",
+        help="do not touch $CODEX_HOME/config.toml or $CODEX_HOME/AGENTS.md",
+    )
+    args = parser.parse_args()
+    apply = not args.check
+
+    models = load_models()
+    mapping = parse_config_mapping(ORCH_CONFIG)
+    source = "existing mapping" if len(mapping) == len(TIERS) else "discovered from your account"
+    if len(mapping) != len(TIERS):
+        derived = derive_mapping(models)
+        derived.update(mapping)
+        mapping = derived
+        if apply:
+            write_config(ORCH_CONFIG, mapping, models)
+
+    known = {m.get("slug") for m in models}
+    for tier, slug in mapping.items():
+        if slug not in known:
+            fail(
+                f"{ORCH_CONFIG} maps tier '{tier}' to '{slug}', which this account does not "
+                f"advertise. Known models: {', '.join(sorted(s for s in known if s))}"
+            )
+
+    print(f"Tier mapping ({source}), from {CODEX_HOME / 'models_cache.json'}:")
+    for tier in TIERS:
+        print(f"  {tier:<9} -> {mapping[tier]}")
+    print()
+    print("Agent roles:")
+    for line in render_roles(mapping, models, apply):
+        print(line)
+
+    if not args.skip_config:
+        upsert_managed_block(
+            CODEX_HOME / "config.toml", agents_config_block(args.max_agents), apply
+        )
+        upsert_managed_block(CODEX_HOME / "AGENTS.md", AGENTS_MD_BLOCK, apply)
+
+    print()
+    if apply:
+        print(f"Wrote role files to {CODEX_HOME / 'agents'}")
+        print(f"Tier mapping lives in {ORCH_CONFIG}")
+    else:
+        print("--check: nothing was written.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
