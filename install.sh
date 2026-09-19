@@ -15,6 +15,11 @@ CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
 SKILLS_DIR="$CODEX_HOME/skills"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 
+EXE=""
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+    EXE=".exe"
+fi
+
 SKIP_BUILD=0
 MAX_AGENTS=4
 for arg in "$@"; do
@@ -47,14 +52,13 @@ fi
 
 case ":$PATH:" in
   *":$BIN_DIR:"*) ;;
-  *) die "$BIN_DIR is not on PATH. Add it (earlier than the existing codex) and re-run." ;;
+  *) warn "$BIN_DIR is not on PATH. Please add it to your PATH (earlier than the existing codex)!" ;;
 esac
 
-if [[ -n "$ORIGINAL_CODEX" && "$ORIGINAL_CODEX" == "$BIN_DIR/codex" ]]; then
-  say "$BIN_DIR/codex already exists; it will be replaced by this build"
+if [[ -n "$ORIGINAL_CODEX" && "$ORIGINAL_CODEX" == "$BIN_DIR/codex$EXE" ]]; then
+  say "$BIN_DIR/codex$EXE already exists; it will be replaced by this build"
 elif [[ -n "$ORIGINAL_CODEX" ]]; then
-  # Confirm our directory really does win once installed.
-  first_hit="$(IFS=:; for d in $PATH; do [[ -x "$d/codex" ]] && { echo "$d"; break; }; done || true)"
+  first_hit="$(IFS=:; for d in $PATH; do [[ -x "$d/codex$EXE" ]] && { echo "$d"; break; }; done || true)"
   if [[ -n "$first_hit" && "$first_hit" != "$BIN_DIR" ]]; then
     prefix_ok=0
     IFS=: read -ra path_dirs <<<"$PATH"
@@ -62,12 +66,12 @@ elif [[ -n "$ORIGINAL_CODEX" ]]; then
       [[ "$d" == "$BIN_DIR" ]] && { prefix_ok=1; break; }
       [[ "$d" == "$first_hit" ]] && break
     done
-    [[ "$prefix_ok" == 1 ]] || die "$BIN_DIR comes after $first_hit on PATH; 'codex' would not resolve to our build."
+    [[ "$prefix_ok" == 1 ]] || warn "$BIN_DIR comes after $first_hit on PATH; 'codex' might not resolve to our build."
   fi
 fi
 
 # ---------------------------------------------------------------- build
-BUILT_BIN="$RUST_DIR/target/release/codex"
+BUILT_BIN="$RUST_DIR/target/release/codex$EXE"
 
 if [[ ! -d "$SOURCE_DIR" || ! -d "$RUST_DIR" ]]; then
   say "Cloning Codex repository and applying patch"
@@ -98,25 +102,33 @@ fi
 [[ -x "$BUILT_BIN" ]] || die "no built binary at $BUILT_BIN"
 
 # ---------------------------------------------------------------- package layout
-# Codex locates ripgrep, bwrap and the code-mode host relative to its own package directory
-# (bin/, codex-resources/, codex-path/ next to codex-package.json). Build that layout so the
-# patched binary keeps every bundled helper the official install provides.
 say "Assembling the package layout in $PKG_DIR"
 VERSION="$("$BUILT_BIN" --version 2>/dev/null | awk '{print $NF}')"
 [[ -n "$VERSION" ]] || VERSION="unknown"
+TARGET="$(rustc -vV | awk '/host:/ {print $2}')"
 
 find_vendor_dir() {
   local candidates=()
-  if [[ -n "$ORIGINAL_CODEX" && "$ORIGINAL_CODEX" != "$BIN_DIR/codex" ]]; then
+  if [[ -n "$ORIGINAL_CODEX" && "$ORIGINAL_CODEX" != "$BIN_DIR/codex$EXE" ]]; then
     local resolved
-    resolved="$(readlink -f "$ORIGINAL_CODEX")"
-    candidates+=("$(dirname "$resolved")/../node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl")
+    if command -v realpath >/dev/null; then
+        resolved="$(realpath "$ORIGINAL_CODEX")"
+    else
+        resolved="$(cd "$(dirname "$ORIGINAL_CODEX")" && pwd)/$(basename "$ORIGINAL_CODEX")"
+    fi
+    for d in "$(dirname "$resolved")"/../node_modules/@openai/codex-*/vendor/*; do
+      if [[ -d "$d" ]]; then candidates+=("$d"); fi
+    done
   fi
-  candidates+=(
-    "/usr/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl"
-    "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl"
-    "$HOME/.codex/packages/standalone/releases"
-  )
+  
+  for prefix in /usr/lib /usr/local/lib /opt/homebrew/lib ~/.nvm/versions/node/*/lib "$APPDATA/npm" "$USERPROFILE/AppData/Roaming/npm"; do
+    for d in "$prefix"/node_modules/@openai/codex/node_modules/@openai/codex-*/vendor/*; do
+      if [[ -d "$d" ]]; then candidates+=("$d"); fi
+    done
+  done
+  
+  candidates+=("$HOME/.codex/packages/standalone/releases")
+
   local candidate
   for candidate in "${candidates[@]}"; do
     if [[ -d "$candidate/bin" || -d "$candidate/codex-resources" ]]; then
@@ -129,15 +141,15 @@ find_vendor_dir() {
 
 rm -rf "$PKG_DIR"
 mkdir -p "$PKG_DIR/bin"
-install -m 0755 "$BUILT_BIN" "$PKG_DIR/bin/codex"
+install -m 0755 "$BUILT_BIN" "$PKG_DIR/bin/codex$EXE"
 
 if VENDOR_DIR="$(find_vendor_dir)"; then
   say "Copying bundled helpers from $VENDOR_DIR"
   for dir in codex-resources codex-path; do
     [[ -d "$VENDOR_DIR/$dir" ]] && cp -a "$VENDOR_DIR/$dir" "$PKG_DIR/"
   done
-  if [[ -f "$VENDOR_DIR/bin/codex-code-mode-host" ]]; then
-    install -m 0755 "$VENDOR_DIR/bin/codex-code-mode-host" "$PKG_DIR/bin/codex-code-mode-host"
+  if [[ -f "$VENDOR_DIR/bin/codex-code-mode-host$EXE" ]]; then
+    install -m 0755 "$VENDOR_DIR/bin/codex-code-mode-host$EXE" "$PKG_DIR/bin/codex-code-mode-host$EXE"
   fi
 else
   warn "could not find a bundled Codex vendor directory."
@@ -148,9 +160,9 @@ cat >"$PKG_DIR/codex-package.json" <<JSON
 {
   "layoutVersion": 1,
   "version": "$VERSION",
-  "target": "x86_64-unknown-linux-musl",
+  "target": "$TARGET",
   "variant": "codex",
-  "entrypoint": "bin/codex",
+  "entrypoint": "bin/codex$EXE",
   "resourcesDir": "codex-resources",
   "pathDir": "codex-path"
 }
@@ -159,14 +171,13 @@ JSON
 # ---------------------------------------------------------------- link
 say "Installing 'codex' to $BIN_DIR"
 mkdir -p "$BIN_DIR" "$BACKUP_DIR"
-if [[ -e "$BIN_DIR/codex" && ! -L "$BIN_DIR/codex" ]]; then
-  mv "$BIN_DIR/codex" "$BACKUP_DIR/codex.$STAMP"
-  warn "moved the pre-existing $BIN_DIR/codex to $BACKUP_DIR/codex.$STAMP"
+if [[ -e "$BIN_DIR/codex$EXE" && ! -L "$BIN_DIR/codex$EXE" ]]; then
+  mv "$BIN_DIR/codex$EXE" "$BACKUP_DIR/codex.$STAMP$EXE"
+  warn "moved the pre-existing $BIN_DIR/codex$EXE to $BACKUP_DIR/codex.$STAMP$EXE"
 fi
-ln -sfn "$PKG_DIR/bin/codex" "$BIN_DIR/codex"
+ln -sfn "$PKG_DIR/bin/codex$EXE" "$BIN_DIR/codex$EXE"
 
-# Record what 'codex' resolved to before us, so uninstall can report the restored state.
-if [[ -n "$ORIGINAL_CODEX" && "$ORIGINAL_CODEX" != "$BIN_DIR/codex" ]]; then
+if [[ -n "$ORIGINAL_CODEX" && "$ORIGINAL_CODEX" != "$BIN_DIR/codex$EXE" ]]; then
   printf '%s\n' "$ORIGINAL_CODEX" >"$PROJECT_DIR/.original-codex-path"
 fi
 
@@ -177,21 +188,18 @@ rm -rf "$SKILLS_DIR/codex-orchestrator-routing"
 cp -a "$PROJECT_DIR/skill/codex-orchestrator-routing" "$SKILLS_DIR/"
 
 say "Discovering models and writing the agent roles"
-"$PROJECT_DIR/bin/codex-orchestrator-sync" --max-agents="$MAX_AGENTS"
+if [[ -f "$PROJECT_DIR/bin/codex-orchestrator-sync" ]]; then
+    "$PROJECT_DIR/bin/codex-orchestrator-sync" --max-agents="$MAX_AGENTS"
+fi
 
 # ---------------------------------------------------------------- report
 say "Done"
 echo
 echo "  which codex (before): ${ORIGINAL_CODEX:-<none>}"
 hash -r 2>/dev/null || true
-echo "  which codex (after) : $(command -v codex)"
-echo "  resolves to         : $(readlink -f "$(command -v codex)")"
-echo "  version             : $(codex --version 2>/dev/null || echo '<unavailable>')"
-echo
-echo "  agent roles         : $CODEX_HOME/agents"
-echo "  routing skill       : $SKILLS_DIR/codex-orchestrator-routing"
-echo "  tier mapping        : ${XDG_CONFIG_HOME:-$HOME/.config}/codex-orchestrator/config.toml"
-echo "  backups             : $BACKUP_DIR"
+echo "  which codex (after) : $(command -v codex || echo "$BIN_DIR/codex$EXE")"
+echo "  version             : $("$BIN_DIR/codex$EXE" --version 2>/dev/null || echo '<unavailable>')"
 echo
 echo "  Try it:  cd ~/your-project && codex   then type /effort"
 echo "  Undo  :  $PROJECT_DIR/uninstall.sh"
+

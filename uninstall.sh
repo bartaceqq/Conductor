@@ -54,24 +54,29 @@ PY
   say "removed the managed block from $file (backup in $BACKUP_DIR)"
 }
 
+EXE=""
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+    EXE=".exe"
+fi
+
 # ------------------------------------------------------------------ binary
-if [[ -L "$BIN_DIR/codex" ]]; then
-  target="$(readlink -f "$BIN_DIR/codex" || true)"
-  if [[ "$target" == "$PKG_DIR/bin/codex" ]]; then
-    rm -f "$BIN_DIR/codex"
-    say "removed $BIN_DIR/codex"
+if [[ -L "$BIN_DIR/codex$EXE" ]]; then
+  target="$(readlink -f "$BIN_DIR/codex$EXE" || true)"
+  if [[ "$target" == "$PKG_DIR/bin/codex$EXE" ]]; then
+    rm -f "$BIN_DIR/codex$EXE"
+    say "removed $BIN_DIR/codex$EXE"
   else
-    say "left $BIN_DIR/codex alone: it points at $target, not our build"
+    say "left $BIN_DIR/codex$EXE alone: it points at $target, not our build"
   fi
-elif [[ -e "$BIN_DIR/codex" ]]; then
-  say "left $BIN_DIR/codex alone: it is not our symlink"
+elif [[ -e "$BIN_DIR/codex$EXE" ]]; then
+  say "left $BIN_DIR/codex$EXE alone: it is not our symlink"
 fi
 
 # Restore any pre-existing binary we moved out of the way during install.
-restored="$(ls -1t "$BACKUP_DIR"/codex.* 2>/dev/null | head -1 || true)"
-if [[ -n "$restored" && ! -e "$BIN_DIR/codex" ]]; then
-  mv "$restored" "$BIN_DIR/codex"
-  say "restored $BIN_DIR/codex from $restored"
+restored="$(ls -1t "$BACKUP_DIR"/codex.* 2>/dev/null | grep -v "\.bak" | head -1 || true)"
+if [[ -n "$restored" && ! -e "$BIN_DIR/codex$EXE" ]]; then
+  mv "$restored" "$BIN_DIR/codex$EXE"
+  say "restored $BIN_DIR/codex$EXE from $restored"
 fi
 
 # ------------------------------------------------------------------ assets

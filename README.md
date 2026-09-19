@@ -45,7 +45,15 @@ Auto-routing: enabled · Active workers: 2/4
 
 ## Quickstart / Download
 
-To download and install Conductor (which patches your local Codex CLI with multi-model routing capabilities), run the following commands:
+Conductor uses a unified installation script that automatically supports **Windows (via Git Bash or WSL)**, **macOS**, and **Linux (Debian, Arch, Ubuntu, etc.)**.
+
+### Prerequisites
+- [Git](https://git-scm.com/)
+- [Rust & Cargo](https://rustup.rs/)
+
+### Installation
+
+Run the following commands in your terminal (or Git Bash on Windows):
 
 ```bash
 git clone https://github.com/bartaceqq/Conductor.git
@@ -53,7 +61,7 @@ cd Conductor
 ./install.sh
 ```
 
-Ensure that `~/.local/bin` is in your `PATH` and restart your shell (or run `rehash` if using zsh) so the newly built `codex` command takes precedence over `/usr/bin/codex`.
+Ensure that `~/.local/bin` is in your `PATH` and restart your shell (or run `rehash` if using zsh) so the newly built `codex` command takes precedence over the original one.
 
 ---
 
