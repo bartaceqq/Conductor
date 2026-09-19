@@ -233,7 +233,7 @@ multi-agent backend, and maps them onto four abstract tiers. The result is writt
 file:
 
 ```
-~/.config/codex-orchestrator/config.toml
+~/.config/Conductor/config.toml
 
 [models]
 cheap     = "…"
@@ -246,7 +246,7 @@ That file is authoritative once written. Edit it and re-run `bin/codex-orchestra
 which model a tier uses. `--check` prints the resolved mapping without writing anything:
 
 ```console
-$ ~/codex-orchestrator/bin/codex-orchestrator-sync --check
+$ ./bin/codex-orchestrator-sync --check
 ```
 
 Each role's requested effort is validated against that model's advertised reasoning levels, and
@@ -303,7 +303,7 @@ the symptom, the files that matter, what is ruled out, and one precise question.
 ### Install
 
 ```console
-$ cd ~/codex-orchestrator
+$ cd ~/Conductor
 $ ./install.sh
 ```
 
@@ -334,7 +334,7 @@ before: /usr/bin/codex
         -> /usr/lib/node_modules/@openai/codex/bin/codex.js   (npm shim)
 
 after : /home/<you>/.local/bin/codex
-        -> /home/<you>/codex-orchestrator/pkg/bin/codex        (patched native binary)
+        -> /home/<you>/Conductor/pkg/bin/codex        (patched native binary)
 ```
 
 The original npm install is untouched and still works — `/usr/bin/codex` runs it directly.
@@ -351,7 +351,7 @@ upstream release, which would silently drop the patch. Upgrades go through
 ## Rollback
 
 ```console
-$ ~/codex-orchestrator/uninstall.sh
+$ ./uninstall.sh
 ```
 
 Removes the `~/.local/bin/codex` symlink (only if it points at our build), deletes the five
@@ -360,7 +360,7 @@ edited files first. It restores any pre-existing `~/.local/bin/codex` it moved a
 then prints the restored `which codex`.
 
 `--purge-source` additionally deletes `pkg/` and the Rust `target/` directory. The git clone and the
-tier mapping in `~/.config/codex-orchestrator/` are always kept.
+tier mapping in `~/.config/Conductor/` are always kept.
 
 ---
 
@@ -369,9 +369,9 @@ tier mapping in `~/.config/codex-orchestrator/` are always kept.
 A patched binary and an upstream release are a merge problem, so this is automated and gated:
 
 ```console
-$ ~/codex-orchestrator/update-patched-codex.sh              # newest stable rust-v* tag
-$ ~/codex-orchestrator/update-patched-codex.sh --tag=rust-v0.156.0
-$ ~/codex-orchestrator/update-patched-codex.sh --dry-run    # rebase + build + test, do not install
+$ ./update-patched-codex.sh              # newest stable rust-v* tag
+$ ./update-patched-codex.sh --tag=rust-v0.156.0
+$ ./update-patched-codex.sh --dry-run    # rebase + build + test, do not install
 ```
 
 It fetches upstream, saves your current patch branch as `…-backup-<timestamp>`, rebases onto the
@@ -384,8 +384,8 @@ exactly as it was and prints the commands to finish the rebase by hand.
 ## Benchmarks
 
 ```console
-$ ~/codex-orchestrator/bench/run-benchmark.sh --task=hard-leak
-$ ~/codex-orchestrator/bench/run-benchmark.sh --repeats=3
+$ ./bench/run-benchmark.sh --task=hard-leak
+$ ./bench/run-benchmark.sh --repeats=3
 ```
 
 Runs each task twice — once with `[agents].enabled = false` (single model, no delegation) and once
@@ -433,8 +433,6 @@ These are real and worth knowing before you rely on this.
   `[agents].max_concurrent_threads_per_session` is set. The installer sets it (default 4). Unset, the
   footer shows just `N`, because the effective default is internal to core and not exposed to the TUI.
 - **`/effort all` is capped** at 100 subagent rows per invocation.
-- **Linux x86-64 only.** The package layout assembly in `install.sh` looks for the
-  `x86_64-unknown-linux-musl` vendor directory.
 - **Build profile.** The release build sets `debug = none` and `strip = symbols` (upstream keeps
   line tables) so the build fits in ~12 GB of disk. Backtraces from the patched binary are therefore
   less detailed than from an official release.
@@ -469,7 +467,7 @@ small and rebasable.
 ## Project layout
 
 ```
-~/codex-orchestrator/
+./
 ├── codex/                     patched upstream source (branch orchestrator/effort-0.155.0)
 ├── pkg/                       assembled Codex package layout (install target)
 ├── agents/                    role templates rendered by codex-orchestrator-sync
