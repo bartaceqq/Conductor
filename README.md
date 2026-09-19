@@ -1,4 +1,4 @@
-# codex-orchestrator
+# Conductor
 
 A patched OpenAI Codex CLI that adds a **native `/effort` slash command**, plus a small set of
 agent roles and a routing policy that make Codex spend a cheap model on cheap subtasks and an
@@ -42,6 +42,18 @@ Auto-routing: enabled · Active workers: 2/4
 - [Benchmarks](#benchmarks)
 - [Limitations](#limitations)
 - [Files this patch touches](#files-this-patch-touches)
+
+## Quickstart / Download
+
+To download and install Conductor (which patches your local Codex CLI with multi-model routing capabilities), run the following commands:
+
+```bash
+git clone https://github.com/bartaceqq/Conductor.git
+cd Conductor
+./install.sh
+```
+
+Ensure that `~/.local/bin` is in your `PATH` and restart your shell (or run `rehash` if using zsh) so the newly built `codex` command takes precedence over `/usr/bin/codex`.
 
 ---
 
