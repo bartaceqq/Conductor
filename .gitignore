@@ -5,3 +5,6 @@ pkg/
 backup/
 bench/results/
 .original-codex-path
+# Python bytecode caches.
+__pycache__/
+*.py[cod]

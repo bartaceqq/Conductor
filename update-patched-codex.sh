@@ -9,20 +9,23 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SOURCE_DIR="$PROJECT_DIR/codex"
 RUST_DIR="$SOURCE_DIR/codex-rs"
-PATCH_BRANCH="${CODEX_ORCHESTRATOR_BRANCH:-orchestrator/effort}"
+PATCH_BRANCH_PREFIX="${CODEX_ORCHESTRATOR_BRANCH_PREFIX:-orchestrator/effort}"
 
 TARGET_TAG=""
 DRY_RUN=0
+FORCE=0
 for arg in "$@"; do
   case "$arg" in
     --tag=*) TARGET_TAG="${arg#*=}" ;;
     --dry-run) DRY_RUN=1 ;;
+    --force) FORCE=1 ;;
     -h|--help)
       sed -n '2,7p' "${BASH_SOURCE[0]}"
       echo
-      echo "Usage: update-patched-codex.sh [--tag=rust-vX.Y.Z] [--dry-run]"
+      echo "Usage: update-patched-codex.sh [--tag=rust-vX.Y.Z] [--dry-run] [--force]"
       echo "  --tag      upstream tag to rebase onto (default: the newest rust-v* release tag)"
       echo "  --dry-run  rebase and build, but do not install"
+      echo "  --force    rebuild even when already based on the target tag"
       exit 0
       ;;
     *) echo "update-patched-codex.sh: unknown argument: $arg" >&2; exit 2 ;;
@@ -31,6 +34,11 @@ done
 
 say() { printf '\033[1m==>\033[0m %s\n' "$*"; }
 die() { printf '\033[31merror:\033[0m %s\n' "$*" >&2; exit 1; }
+
+[[ -d "$SOURCE_DIR/.git" ]] || die "no patched Codex checkout at $SOURCE_DIR; run ./install.sh first"
+for tool in git cargo rustc; do
+  command -v "$tool" >/dev/null || die "$tool not found; install it before updating (see ./install.sh --help)"
+done
 
 cd "$SOURCE_DIR"
 
@@ -49,12 +57,13 @@ fi
 say "Target upstream tag: $TARGET_TAG"
 
 BASE_TAG="$(git describe --tags --abbrev=0 --match 'rust-v*' "$CURRENT_BRANCH" 2>/dev/null || true)"
-if [[ "$BASE_TAG" == "$TARGET_TAG" ]]; then
-  say "Already based on $TARGET_TAG; nothing to rebase."
+if [[ "$BASE_TAG" == "$TARGET_TAG" && "$FORCE" == 0 ]]; then
+  say "Already based on $TARGET_TAG; nothing to do (pass --force to rebuild anyway)."
+  exit 0
 fi
 
 STAMP="$(date +%Y%m%d-%H%M%S)"
-WORK_BRANCH="${PATCH_BRANCH}-${TARGET_TAG#rust-v}"
+WORK_BRANCH="${PATCH_BRANCH_PREFIX}-${TARGET_TAG#rust-v}"
 BACKUP_BRANCH="${CURRENT_BRANCH}-backup-${STAMP}"
 
 say "Saving the current patch branch as $BACKUP_BRANCH"
@@ -94,7 +103,7 @@ if ! CARGO_PROFILE_RELEASE_DEBUG=none \
 fi
 
 say "Running the /effort tests"
-if ! "$PROJECT_DIR/bin/run-effort-tests.sh"; then
+if ! bash "$PROJECT_DIR/bin/run-effort-tests.sh"; then
   cd "$SOURCE_DIR"
   git checkout -q "$CURRENT_BRANCH"
   die "tests failed on $TARGET_TAG; the installed binary was not touched (rebased branch kept as $WORK_BRANCH)"

@@ -1,4 +1,3 @@
-export RUST_MIN_STACK=16777216
 #!/usr/bin/env bash
 # Run the tests that cover the /effort patch, plus the neighbouring upstream suites it could break.
 #
@@ -19,6 +18,8 @@ export CARGO_PROFILE_TEST_STRIP=symbols
 export CARGO_PROFILE_DEV_STRIP=symbols
 export CARGO_PROFILE_DEV_DEBUG=none
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
+# Some TUI tests recurse deeply enough to overflow the default 8MB test stack.
+export RUST_MIN_STACK=16777216
 
 say() { printf '\033[1m==>\033[0m %s\n' "$*"; }
 

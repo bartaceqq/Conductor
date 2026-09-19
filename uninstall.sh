@@ -74,7 +74,8 @@ fi
 
 # Restore any pre-existing binary we moved out of the way during install.
 restored="$(ls -1t "$BACKUP_DIR"/codex.* 2>/dev/null | grep -v "\.bak" | head -1 || true)"
-if [[ -n "$restored" && ! -e "$BIN_DIR/codex$EXE" ]]; then
+# Only restore something that is actually an executable we moved aside, never a stray text backup.
+if [[ -n "$restored" && -f "$restored" && -x "$restored" && ! -e "$BIN_DIR/codex$EXE" ]]; then
   mv "$restored" "$BIN_DIR/codex$EXE"
   say "restored $BIN_DIR/codex$EXE from $restored"
 fi

@@ -48,12 +48,35 @@ Auto-routing: enabled · Active workers: 2/4
 Conductor uses a unified installation script that automatically supports **Windows (via Git Bash or WSL)**, **macOS**, and **Linux (Debian, Arch, Ubuntu, etc.)**.
 
 ### Prerequisites
-- [Git](https://git-scm.com/)
-- [Rust & Cargo](https://rustup.rs/)
+
+| | why |
+|---|---|
+| [Git](https://git-scm.com/) | fetches and patches the Codex source |
+| [rustup](https://rustup.rs/) | builds the patched binary |
+| Python 3.9+ | generates the agent role files |
+| ~12 GB free disk | build artifacts, plus ~250 MB for the source clone |
+
+`install.sh` checks all of these before it downloads anything, so a missing tool costs
+you a second rather than a failed build.
+
+**Use rustup rather than a distro Rust package.** The build is pinned by
+`codex-rs/rust-toolchain.toml` (currently **1.95.0**), and only rustup honours that pin —
+it installs the right toolchain automatically the first time you build. A system package
+such as Arch's `rust` or Debian's `rustc` ignores the pin and may be a different version:
+
+```bash
+# Arch
+sudo pacman -S rustup && rustup default stable
+# Debian / Ubuntu / macOS / anything else
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+Restart your shell afterwards so `cargo` is on `PATH`.
 
 ### Installation
 
-Run the following commands in your terminal (or Git Bash on Windows):
+Run the following in your terminal (or Git Bash on Windows) — from your home directory or
+any directory that is **not** already inside a Conductor checkout:
 
 ```bash
 git clone https://github.com/bartaceqq/Conductor.git
@@ -61,7 +84,23 @@ cd Conductor
 ./install.sh
 ```
 
-Ensure that `~/.local/bin` is in your `PATH` and restart your shell (or run `rehash` if using zsh) so the newly built `codex` command takes precedence over the original one.
+The first run compiles ~1400 crates and takes roughly 10–30 minutes. The last step
+(link-time optimisation of a ~250 MB binary) prints nothing for several minutes; that is
+normal, not a hang.
+
+Finally, put `~/.local/bin` on your `PATH` **ahead of** the existing `codex`, and open a
+new shell:
+
+```bash
+# bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+# zsh
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+# fish
+fish_add_path -m ~/.local/bin
+```
+
+Check it took with `which codex` — it should print `~/.local/bin/codex`, not `/usr/bin/codex`.
 
 ---
 
@@ -295,8 +334,12 @@ the symptom, the files that matter, what is ruled out, and one precise question.
 
 ### Requirements
 
-- Linux x86-64, an existing Codex install (for the bundled ripgrep/bwrap/code-mode helpers)
-- Rust toolchain (`cargo`)
+- Linux x86-64 or macOS; Windows via Git Bash or WSL
+- An existing Codex install, for the bundled ripgrep/bwrap/code-mode helpers. Optional —
+  without it the build falls back to the system `rg`/`bwrap`, and `install.sh` says so.
+- `git`, `python3`, and a Rust toolchain via [rustup](https://rustup.rs/) (see
+  [Prerequisites](#prerequisites) — the build is pinned to the channel in
+  `codex-rs/rust-toolchain.toml`)
 - `~/.local/bin` on `PATH`, **earlier than** the existing `codex`
 - ~12 GB free disk for the build
 
@@ -311,7 +354,9 @@ $ ./install.sh
 
 1. records what `which codex` resolves to today,
 2. verifies `~/.local/bin` really does come first on `PATH`,
-3. builds `codex` from the patched source (`codex/`, branch `orchestrator/effort-0.155.0`),
+3. clones upstream Codex if needed and applies `patches/codex-orchestrator.patch`, then builds
+   `codex` from the patched source (`codex/`, branch `orchestrator/effort-0.155.0`). If a previous
+   run left the checkout unpatched or half-applied, it repairs it rather than building stock Codex,
 4. assembles a Codex **package layout** in `pkg/` — `bin/codex`, `codex-package.json`,
    `codex-resources/`, `codex-path/` — copying the version-matched `rg`, `bwrap`, voice resources
    and `codex-code-mode-host` out of your existing install, so every bundled helper still resolves,
