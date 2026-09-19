@@ -1,3 +1,4 @@
+export RUST_MIN_STACK=16777216
 #!/usr/bin/env bash
 # Run the tests that cover the /effort patch, plus the neighbouring upstream suites it could break.
 #
@@ -11,6 +12,11 @@ cd "$RUST_DIR"
 
 # Debug info dominates test-binary size; turn it off so a full run fits on a small disk.
 export CARGO_PROFILE_TEST_DEBUG=none
+export CARGO_INCREMENTAL=0
+export CARGO_BUILD_JOBS=2
+export INSTA_UPDATE=always
+export CARGO_PROFILE_TEST_STRIP=symbols
+export CARGO_PROFILE_DEV_STRIP=symbols
 export CARGO_PROFILE_DEV_DEBUG=none
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
