@@ -1,0 +1,3383 @@
+diff --git a/codex-rs/Cargo.lock b/codex-rs/Cargo.lock
+index 5394382df2..a05c20ca98 100644
+--- a/codex-rs/Cargo.lock
++++ b/codex-rs/Cargo.lock
+@@ -416,7 +416,7 @@ checksum = "2a4385e2e34eb35d6b3efe798b9eb88096925d87726c0798709bf56d9ed84af3"
+ 
+ [[package]]
+ name = "app_test_support"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "base64 0.22.1",
+@@ -2040,7 +2040,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-agent-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-core",
+@@ -2052,7 +2052,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-agent-graph-store"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-protocol",
+  "codex-state",
+@@ -2067,7 +2067,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-agent-identity"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "base64 0.22.1",
+@@ -2087,7 +2087,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-agent-roles"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-config",
+  "codex-file-system",
+@@ -2100,7 +2100,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-analytics"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-app-server-protocol",
+  "codex-git-utils",
+@@ -2121,7 +2121,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-ansi-escape"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "ansi-to-tui",
+  "ratatui",
+@@ -2130,7 +2130,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-api"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "assert_matches",
+@@ -2165,7 +2165,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-app-server"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "app_test_support",
+@@ -2271,7 +2271,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-app-server-client"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-app-server",
+  "codex-app-server-protocol",
+@@ -2298,7 +2298,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-app-server-daemon"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "blake3",
+@@ -2321,7 +2321,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-app-server-protocol"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-app-server-protocol-noop-macros",
+@@ -2355,11 +2355,11 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-app-server-protocol-noop-macros"
+-version = "0.0.0"
++version = "0.155.0"
+ 
+ [[package]]
+ name = "codex-app-server-test-client"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "clap",
+@@ -2381,7 +2381,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-app-server-transport"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "axum",
+@@ -2424,7 +2424,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-apply-patch"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "assert_cmd",
+@@ -2444,7 +2444,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-arg0"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-apply-patch",
+@@ -2466,7 +2466,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-async-utils"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "pretty_assertions",
+  "tokio",
+@@ -2475,7 +2475,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-attachment-store"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "codex-utils-image",
+@@ -2486,7 +2486,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-aws-auth"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "aws-config",
+  "aws-credential-types",
+@@ -2501,7 +2501,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-backend-client"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-api",
+@@ -2521,7 +2521,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-backend-openapi-models"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "serde",
+  "serde_json",
+@@ -2530,7 +2530,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-build-info"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-install-context",
+  "pretty_assertions",
+@@ -2543,7 +2543,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-bwrap"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "cc",
+  "libc",
+@@ -2552,7 +2552,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-chatgpt"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "clap",
+@@ -2574,7 +2574,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-cli"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "app_test_support",
+@@ -2667,7 +2667,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-client"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-http-client",
+  "eventsource-stream",
+@@ -2680,7 +2680,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-cloud-config"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "chrono",
+@@ -2705,7 +2705,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-cloud-tasks"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "chrono",
+@@ -2738,7 +2738,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-cloud-tasks-client"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "chrono",
+@@ -2753,7 +2753,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-cloud-tasks-mock-client"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "chrono",
+  "codex-cloud-tasks-client",
+@@ -2762,7 +2762,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-code-mode"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-code-mode-protocol",
+  "codex-http-client",
+@@ -2785,7 +2785,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-code-mode-host"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "axum",
+@@ -2813,7 +2813,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-code-mode-protocol"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-protocol",
+  "glob",
+@@ -2831,7 +2831,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-code-mode-runtime"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "codex-code-mode-protocol",
+@@ -2849,11 +2849,11 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-collaboration-mode-templates"
+-version = "0.0.0"
++version = "0.155.0"
+ 
+ [[package]]
+ name = "codex-config"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "base64 0.22.1",
+@@ -2903,7 +2903,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-config-schema"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "clap",
+@@ -2912,7 +2912,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-connectors"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "arc-swap",
+@@ -2934,7 +2934,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-connectors-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-connectors",
+  "codex-core-plugins",
+@@ -2948,7 +2948,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-context-fragments"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-protocol",
+  "codex-utils-string",
+@@ -2957,7 +2957,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-core"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "arc-swap",
+@@ -3093,7 +3093,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-core-api"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-analytics",
+  "codex-app-server-protocol",
+@@ -3116,7 +3116,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-core-plugins"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "chrono",
+@@ -3171,7 +3171,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-diagnostics"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "libc",
+  "pretty_assertions",
+@@ -3179,7 +3179,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-exec"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "assert_cmd",
+@@ -3230,7 +3230,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-exec-server"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "arc-swap",
+@@ -3290,7 +3290,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-exec-server-protocol"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "codex-file-system",
+@@ -3305,7 +3305,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-exec-server-test-support"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-exec-server",
+@@ -3320,7 +3320,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-execpolicy"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "clap",
+@@ -3338,7 +3338,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-experimental-api-macros"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -3347,7 +3347,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-extension-api"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-config",
+  "codex-context-fragments",
+@@ -3365,7 +3365,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-extension-items"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-utils-absolute-path",
+  "pretty_assertions",
+@@ -3377,7 +3377,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-external-agent-migration"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "chrono",
+  "codex-analytics",
+@@ -3407,7 +3407,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-features"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-network-proxy",
+  "codex-otel",
+@@ -3421,7 +3421,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-feedback"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "bytes",
+@@ -3444,7 +3444,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-file-search"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "clap",
+@@ -3460,7 +3460,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-file-system"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "bytes",
+  "codex-protocol",
+@@ -3472,7 +3472,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-file-watcher"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "notify",
+  "pretty_assertions",
+@@ -3483,7 +3483,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-git-attribution"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-backend-client",
+  "codex-extension-api",
+@@ -3496,7 +3496,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-git-utils"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "chrono",
+@@ -3522,7 +3522,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-goal-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "chrono",
+@@ -3546,7 +3546,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-guardian-context"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-context-fragments",
+  "codex-history",
+@@ -3557,7 +3557,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-guardian-reviewer"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-analytics",
+@@ -3581,7 +3581,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-guardian-v2"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-analytics",
+@@ -3609,7 +3609,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-history"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-protocol",
+@@ -3621,7 +3621,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-history-notes-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-analytics",
+  "codex-api",
+@@ -3646,7 +3646,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-home"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-extension-api",
+  "codex-utils-absolute-path",
+@@ -3657,7 +3657,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-hooks"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "async-channel",
+@@ -3683,7 +3683,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-http-client"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "bytes",
+  "codex-utils-cargo-bin",
+@@ -3715,7 +3715,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-image-generation-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "codex-api",
+@@ -3742,7 +3742,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-install-context"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-utils-absolute-path",
+  "codex-utils-home-dir",
+@@ -3755,7 +3755,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-keyring-store"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "keyring",
+  "tracing",
+@@ -3763,7 +3763,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-linux-sandbox"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "clap",
+  "codex-core",
+@@ -3790,7 +3790,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-lmstudio"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-core",
+  "codex-http-client",
+@@ -3804,7 +3804,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-login"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "base64 0.22.1",
+@@ -3847,7 +3847,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-mcp"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "arc-swap",
+@@ -3887,7 +3887,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-mcp-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "axum",
+@@ -3918,7 +3918,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-memories-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-core",
+  "codex-extension-api",
+@@ -3940,7 +3940,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-memories-read"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-protocol",
+  "codex-shell-command",
+@@ -3950,7 +3950,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-memories-write"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "chrono",
+@@ -3987,7 +3987,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-message-history"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-config",
+  "memchr",
+@@ -4001,7 +4001,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-model-provider"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "chrono",
+@@ -4030,7 +4030,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-model-provider-info"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-api",
+  "codex-protocol",
+@@ -4047,7 +4047,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-models-manager"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "chrono",
+  "codex-collaboration-mode-templates",
+@@ -4066,7 +4066,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-mxc-sandbox"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "appcontainer_common",
+@@ -4085,7 +4085,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-network-proxy"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "base64 0.22.1",
+@@ -4129,7 +4129,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-ollama"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "assert_matches",
+  "async-stream",
+@@ -4149,7 +4149,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-otel"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "chrono",
+  "codex-api",
+@@ -4182,7 +4182,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-otel-trace-websocket"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "axum",
+@@ -4193,7 +4193,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-plugin"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-config",
+  "codex-protocol",
+@@ -4207,7 +4207,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-process-hardening"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "libc",
+  "pretty_assertions",
+@@ -4215,7 +4215,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-prompts"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-context-fragments",
+@@ -4229,7 +4229,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-protocol"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "chardetng",
+@@ -4273,7 +4273,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-queue-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-core",
+@@ -4294,7 +4294,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-realtime-webrtc"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-build-info",
+@@ -4311,7 +4311,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-response-debug-context"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "codex-api",
+@@ -4322,7 +4322,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-responses-api-proxy"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "clap",
+@@ -4339,7 +4339,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-rmcp-client"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "axum",
+@@ -4387,7 +4387,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-rollout"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "chrono",
+@@ -4414,7 +4414,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-rollout-trace"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-code-mode",
+@@ -4430,7 +4430,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-sandboxing"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-mxc-sandbox",
+@@ -4456,7 +4456,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-secrets"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "age",
+  "anyhow",
+@@ -4477,7 +4477,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-shell-command"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "base64 0.22.1",
+@@ -4500,7 +4500,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-shell-escalation"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "clap",
+@@ -4520,7 +4520,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-skills"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-protocol",
+  "codex-shell-command",
+@@ -4537,7 +4537,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-skills-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "assert_matches",
+  "codex-analytics",
+@@ -4574,7 +4574,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-state"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "chrono",
+@@ -4598,7 +4598,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-stdio-to-uds"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-uds",
+@@ -4610,7 +4610,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-terminal-detection"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "pretty_assertions",
+  "tracing",
+@@ -4618,7 +4618,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-test-binary-support"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-arg0",
+  "tempfile",
+@@ -4626,7 +4626,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-thread-manager-sample"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "clap",
+@@ -4637,7 +4637,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-thread-store"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "chrono",
+  "codex-app-server-protocol",
+@@ -4667,7 +4667,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-tools"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "bitflags 2.13.1",
+  "codex-code-mode",
+@@ -4692,7 +4692,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-tui"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "app_test_support",
+@@ -4810,7 +4810,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-uds"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "async-io",
+  "pretty_assertions",
+@@ -4823,7 +4823,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-user-verification"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "core-foundation 0.10.1",
+@@ -4843,7 +4843,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-absolute-path"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "dirs",
+  "dunce",
+@@ -4857,14 +4857,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-approval-presets"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-protocol",
+ ]
+ 
+ [[package]]
+ name = "codex-utils-audio"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "codex-protocol",
+@@ -4878,7 +4878,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-cache"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "lru",
+  "sha1 0.10.6",
+@@ -4887,7 +4887,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-cargo-bin"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "assert_cmd",
+  "runfiles",
+@@ -4896,7 +4896,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-cli"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "clap",
+  "codex-protocol",
+@@ -4908,15 +4908,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-elapsed"
+-version = "0.0.0"
++version = "0.155.0"
+ 
+ [[package]]
+ name = "codex-utils-fuzzy-match"
+-version = "0.0.0"
++version = "0.155.0"
+ 
+ [[package]]
+ name = "codex-utils-git-discovery"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-git-utils",
+  "codex-utils-absolute-path",
+@@ -4929,7 +4929,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-home-dir"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-utils-absolute-path",
+  "dirs",
+@@ -4939,7 +4939,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-image"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "codex-utils-cache",
+@@ -4952,7 +4952,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-json-to-toml"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "pretty_assertions",
+  "serde_json",
+@@ -4961,7 +4961,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-oss"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-core",
+  "codex-lmstudio",
+@@ -4971,7 +4971,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-output-truncation"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-protocol",
+  "codex-utils-string",
+@@ -4980,7 +4980,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-path"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-utils-absolute-path",
+  "dunce",
+@@ -4991,7 +4991,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-path-uri"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "base64 0.22.1",
+  "codex-utils-absolute-path",
+@@ -5007,7 +5007,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-plugins"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-exec-server",
+  "codex-exec-server-protocol",
+@@ -5021,7 +5021,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-pty"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "filedescriptor",
+@@ -5037,7 +5037,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-readiness"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "assert_matches",
+  "thiserror 2.0.18",
+@@ -5047,7 +5047,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-redacted-string"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "schemars 0.8.22",
+  "serde",
+@@ -5055,14 +5055,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-rustls-provider"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "rustls",
+ ]
+ 
+ [[package]]
+ name = "codex-utils-sandbox-summary"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-protocol",
+  "codex-utils-absolute-path",
+@@ -5071,7 +5071,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-sleep-inhibitor"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "core-foundation 0.9.4",
+  "libc",
+@@ -5081,14 +5081,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-stream-parser"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "pretty_assertions",
+ ]
+ 
+ [[package]]
+ name = "codex-utils-string"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "pretty_assertions",
+  "regex-lite",
+@@ -5098,14 +5098,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-utils-template"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "pretty_assertions",
+ ]
+ 
+ [[package]]
+ name = "codex-v8-poc"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "pretty_assertions",
+  "v8",
+@@ -5113,7 +5113,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-voice-host"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-install-context",
+@@ -5140,7 +5140,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-web-search-extension"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-api",
+  "codex-core",
+@@ -5161,7 +5161,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-websocket-client"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-http-client",
+  "codex-utils-rustls-provider",
+@@ -5177,7 +5177,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-windows-sandbox"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "base64 0.22.1",
+@@ -5203,7 +5203,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-windows-sandbox-service"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-cloud-config",
+@@ -5220,7 +5220,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-workload-identity"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "codex-http-client",
+  "pretty_assertions",
+@@ -5235,7 +5235,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "codex-worktree"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "codex-git-utils",
+@@ -5475,7 +5475,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "core_test_support"
+-version = "0.0.0"
++version = "0.155.0"
+ dependencies = [
+  "anyhow",
+  "assert_cmd",
+diff --git a/codex-rs/tui/src/app.rs b/codex-rs/tui/src/app.rs
+index 4e4f534ca6..e3954bf215 100644
+--- a/codex-rs/tui/src/app.rs
++++ b/codex-rs/tui/src/app.rs
+@@ -218,6 +218,7 @@ mod backend_banner_fallback;
+ mod background_requests;
+ mod config_persistence;
+ mod connector_mentions;
++mod effort_status;
+ mod event_dispatch;
+ mod exit_summary;
+ mod experimental_features;
+diff --git a/codex-rs/tui/src/app/effort_status.rs b/codex-rs/tui/src/app/effort_status.rs
+new file mode 100644
+index 0000000000..040c4ced99
+--- /dev/null
++++ b/codex-rs/tui/src/app/effort_status.rs
+@@ -0,0 +1,163 @@
++//! Background runtime read behind the `/effort` command.
++//!
++//! `/effort` must report what each agent in this session is *actually* running with, so the rows
++//! come from the app server's live thread records rather than from `config.toml` or an agent-role
++//! file. For a loaded thread the app server fills `model` and `reasoningEffort` from that thread's
++//! `ThreadConfigSnapshot`, which is the configuration Codex resolved after spawn overrides,
++//! `[agents]` defaults, parent inheritance, and role config files were applied.
++//!
++//! Both requests used here are read-only and are not serialized behind a running turn, so the
++//! command works while agents are busy and never interrupts them. No model request is issued.
++
++use super::*;
++use crate::app_event::EffortStatusReadout;
++use crate::effort_status::EffortStatusInputs;
++use crate::effort_status::EffortStatusScope;
++use crate::effort_status::build_effort_status;
++use codex_app_server_protocol::RequestId;
++use codex_app_server_protocol::SortDirection;
++use codex_app_server_protocol::Thread;
++use codex_app_server_protocol::ThreadListParams;
++use codex_app_server_protocol::ThreadListResponse;
++use codex_app_server_protocol::ThreadReadParams;
++use codex_app_server_protocol::ThreadReadResponse;
++use codex_app_server_protocol::ThreadSourceKind;
++
++/// Upper bound on subagent rows collected for one `/effort` invocation.
++const EFFORT_STATUS_MAX_AGENTS: u32 = 100;
++
++impl App {
++    pub(super) fn request_effort_status(
++        &mut self,
++        app_server: &AppServerSession,
++        command: String,
++        scope: EffortStatusScope,
++    ) {
++        let Some(root) = self
++            .primary_thread_id
++            .or_else(|| self.chat_widget.thread_id())
++        else {
++            self.chat_widget.add_error_message(
++                "Session is still starting; try /effort again in a moment.".to_string(),
++            );
++            return;
++        };
++
++        let request_handle = app_server.request_handle();
++        let app_event_tx = self.app_event_tx.clone();
++        let needs_agents = scope != EffortStatusScope::Parent;
++        tokio::spawn(async move {
++            let parent = request_handle
++                .request_typed::<ThreadReadResponse>(ClientRequest::ThreadRead {
++                    request_id: RequestId::String(Uuid::new_v4().to_string()),
++                    params: ThreadReadParams {
++                        thread_id: root.to_string(),
++                        include_turns: false,
++                    },
++                })
++                .await;
++            let agents = if needs_agents {
++                request_handle
++                    .request_typed::<ThreadListResponse>(ClientRequest::ThreadList {
++                        request_id: RequestId::String(Uuid::new_v4().to_string()),
++                        params: ThreadListParams {
++                            originators: None,
++                            cursor: None,
++                            limit: Some(EFFORT_STATUS_MAX_AGENTS),
++                            sort_key: None,
++                            sort_direction: Some(SortDirection::Desc),
++                            model_providers: Some(Vec::new()),
++                            source_kinds: Some(vec![ThreadSourceKind::SubAgentThreadSpawn]),
++                            archived: None,
++                            section_id: None,
++                            project_id: None,
++                            cwd: None,
++                            use_state_db_only: true,
++                            search_term: None,
++                            parent_thread_id: None,
++                            ancestor_thread_id: Some(root.to_string()),
++                        },
++                    })
++                    .await
++                    .map(|response| response.data)
++            } else {
++                Ok(Vec::new())
++            };
++
++            let result = collect_effort_status_readout(parent, agents);
++            app_event_tx.send(AppEvent::EffortStatusLoaded {
++                command,
++                scope,
++                result: Box::new(result),
++            });
++        });
++    }
++
++    pub(super) fn apply_effort_status(
++        &mut self,
++        command: String,
++        scope: EffortStatusScope,
++        result: Result<EffortStatusReadout, String>,
++    ) {
++        let readout = match result {
++            Ok(readout) => readout,
++            Err(err) => {
++                self.chat_widget
++                    .add_error_message(format!("Could not read live agent state: {err}"));
++                return;
++            }
++        };
++
++        let config = self.chat_widget.config_ref();
++        let snapshot = build_effort_status(EffortStatusInputs {
++            scope,
++            parent: readout.parent.as_ref(),
++            parent_fallback: self.chat_widget.effort_status_parent_fallback(),
++            agents: &readout.agents,
++            max_agents: config.agent_max_threads,
++            auto_routing_enabled: config.agents_enabled,
++            note: readout.note,
++        });
++        self.chat_widget.add_effort_status_output(command, snapshot);
++    }
++}
++
++/// Merges the two reads, degrading to a partial report rather than failing outright.
++///
++/// The parent row can fall back to the values the TUI already tracks, so a failed parent read only
++/// annotates the output. A failed agent listing with no parent record leaves nothing to show.
++fn collect_effort_status_readout<E: std::fmt::Display>(
++    parent: Result<ThreadReadResponse, E>,
++    agents: Result<Vec<Thread>, E>,
++) -> Result<EffortStatusReadout, String> {
++    let mut notes = Vec::new();
++    let parent = match parent {
++        Ok(response) => Some(response.thread),
++        Err(err) => {
++            tracing::warn!(%err, "failed to read the root thread for /effort");
++            notes.push(format!("parent runtime state unavailable ({err}); showing the values this session last applied"));
++            None
++        }
++    };
++    let agents = match agents {
++        Ok(agents) => agents,
++        Err(err) => {
++            if parent.is_none() {
++                return Err(err.to_string());
++            }
++            tracing::warn!(%err, "failed to list subagents for /effort");
++            notes.push(format!("subagent runtime state unavailable ({err})"));
++            Vec::new()
++        }
++    };
++
++    Ok(EffortStatusReadout {
++        parent,
++        agents,
++        note: (!notes.is_empty()).then(|| notes.join("; ")),
++    })
++}
++
++#[cfg(test)]
++#[path = "effort_status_tests.rs"]
++mod tests;
+diff --git a/codex-rs/tui/src/app/effort_status_tests.rs b/codex-rs/tui/src/app/effort_status_tests.rs
+new file mode 100644
+index 0000000000..bba6fa2c84
+--- /dev/null
++++ b/codex-rs/tui/src/app/effort_status_tests.rs
+@@ -0,0 +1,106 @@
++use super::collect_effort_status_readout;
++use codex_app_server_protocol::SessionSource as ApiSessionSource;
++use codex_app_server_protocol::Thread;
++use codex_app_server_protocol::ThreadReadResponse;
++use codex_app_server_protocol::ThreadStatus;
++use codex_utils_absolute_path::AbsolutePathBuf;
++use pretty_assertions::assert_eq;
++
++fn thread(id: &str) -> Thread {
++    Thread {
++        id: id.to_string(),
++        environments: None,
++        extra: None,
++        session_id: "session".to_string(),
++        forked_from_id: None,
++        parent_thread_id: None,
++        preview: String::new(),
++        ephemeral: false,
++        section: None,
++        section_entered_at: None,
++        project_id: None,
++        history_mode: Default::default(),
++        model_provider: "openai".to_string(),
++        model: Some("gpt-5.6-sol".to_string()),
++        reasoning_effort: None,
++        created_at: 0,
++        updated_at: 0,
++        recency_at: None,
++        status: ThreadStatus::Idle,
++        path: None,
++        cwd: AbsolutePathBuf::from_absolute_path(if cfg!(windows) {
++            std::path::PathBuf::from("C:\\workspace")
++        } else {
++            std::path::PathBuf::from("/workspace")
++        })
++        .expect("absolute path"),
++        cli_version: "0.0.0".to_string(),
++        originator: None,
++        source: ApiSessionSource::Cli,
++        can_accept_direct_input: None,
++        thread_source: None,
++        agent_nickname: None,
++        agent_role: None,
++        git_info: None,
++        name: None,
++        daybreak_enabled: None,
++        turns: Vec::new(),
++    }
++}
++
++#[test]
++fn both_reads_succeeding_produces_an_unannotated_readout() {
++    let readout = collect_effort_status_readout::<String>(
++        Ok(ThreadReadResponse {
++            thread: thread("root"),
++        }),
++        Ok(vec![thread("agent")]),
++    )
++    .expect("readout");
++
++    assert!(readout.parent.is_some());
++    assert_eq!(readout.agents.len(), 1);
++    assert_eq!(readout.note, None);
++}
++
++#[test]
++fn a_failed_parent_read_degrades_to_a_note() {
++    let readout = collect_effort_status_readout(Err("boom".to_string()), Ok(vec![thread("agent")]))
++        .expect("readout");
++
++    assert!(readout.parent.is_none());
++    assert_eq!(readout.agents.len(), 1);
++    assert!(
++        readout
++            .note
++            .as_deref()
++            .is_some_and(|note| note.contains("parent runtime state unavailable"))
++    );
++}
++
++#[test]
++fn a_failed_agent_listing_keeps_the_parent_row() {
++    let readout = collect_effort_status_readout(
++        Ok(ThreadReadResponse {
++            thread: thread("root"),
++        }),
++        Err("offline".to_string()),
++    )
++    .expect("readout");
++
++    assert!(readout.parent.is_some());
++    assert!(readout.agents.is_empty());
++    assert!(
++        readout
++            .note
++            .as_deref()
++            .is_some_and(|note| note.contains("subagent runtime state unavailable"))
++    );
++}
++
++#[test]
++fn losing_both_reads_reports_an_error() {
++    let result =
++        collect_effort_status_readout::<String>(Err("down".to_string()), Err("down".to_string()));
++    assert_eq!(result.err().as_deref(), Some("down"));
++}
+diff --git a/codex-rs/tui/src/app/event_dispatch.rs b/codex-rs/tui/src/app/event_dispatch.rs
+index bcd076f26f..a5afd99bc1 100644
+--- a/codex-rs/tui/src/app/event_dispatch.rs
++++ b/codex-rs/tui/src/app/event_dispatch.rs
+@@ -2703,6 +2703,16 @@ impl App {
+                     ));
+                 }
+             }
++            AppEvent::RequestEffortStatus { command, scope } => {
++                self.request_effort_status(app_server, command, scope);
++            }
++            AppEvent::EffortStatusLoaded {
++                command,
++                scope,
++                result,
++            } => {
++                self.apply_effort_status(command, scope, *result);
++            }
+             AppEvent::OpenAgentsOverview => {
+                 self.open_agents_overview(app_server);
+             }
+diff --git a/codex-rs/tui/src/app_event.rs b/codex-rs/tui/src/app_event.rs
+index 7611d89cf5..dbeddaa517 100644
+--- a/codex-rs/tui/src/app_event.rs
++++ b/codex-rs/tui/src/app_event.rs
+@@ -266,12 +266,34 @@ pub(crate) struct AgentsOverviewThreadRefresh {
+     pub(crate) recent_seed_complete: bool,
+ }
+ 
++/// Live thread records collected for one `/effort` invocation.
++#[derive(Debug, Default)]
++pub(crate) struct EffortStatusReadout {
++    /// Live record for the session's root thread, when the read succeeded.
++    pub(crate) parent: Option<Thread>,
++    /// Live records for the root thread's spawned subagents.
++    pub(crate) agents: Vec<Thread>,
++    /// Set when part of the read failed and the output is therefore incomplete.
++    pub(crate) note: Option<String>,
++}
++
+ #[allow(clippy::large_enum_variant)]
+ #[derive(Debug, IntoStaticStr)]
+ pub(crate) enum AppEvent {
+     ReviewMisalignment(Arc<crate::chatwidget::MisalignmentReview>),
+     ContinueMisalignment(Arc<crate::chatwidget::MisalignmentReview>),
+     CloseMisalignmentReview,
++    /// Collect live model/reasoning state for `/effort` from the app server.
++    RequestEffortStatus {
++        command: String,
++        scope: crate::effort_status::EffortStatusScope,
++    },
++    /// Render `/effort` once the background runtime read finishes.
++    EffortStatusLoaded {
++        command: String,
++        scope: crate::effort_status::EffortStatusScope,
++        result: Box<Result<EffortStatusReadout, String>>,
++    },
+     /// Open the daemon-wide overview of recent and locally retained root sessions.
+     OpenAgentsOverview,
+     /// Update the daemon-wide overview after a background thread listing finishes.
+diff --git a/codex-rs/tui/src/bottom_pane/chat_composer.rs b/codex-rs/tui/src/bottom_pane/chat_composer.rs
+index b5639c05e2..0a949c794c 100644
+--- a/codex-rs/tui/src/bottom_pane/chat_composer.rs
++++ b/codex-rs/tui/src/bottom_pane/chat_composer.rs
+@@ -405,7 +405,9 @@ pub enum InputResult {
+ }
+ 
+ fn parent_owned_command_is_allowed(command: SlashCommand, args: &str) -> bool {
+-    if command == SlashCommand::Export {
++    // `/effort` only reads local runtime state, so it stays available - with its arguments - even
++    // while the composer is showing a parent-owned spawned child thread.
++    if command == SlashCommand::Export || command == SlashCommand::Effort {
+         return true;
+     }
+ 
+diff --git a/codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__command_popup__tests__command_popup_default_items.snap b/codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__command_popup__tests__command_popup_default_items.snap
+index 0cadee0486..cddf0f2d54 100644
+--- a/codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__command_popup__tests__command_popup_default_items.snap
++++ b/codex-rs/tui/src/bottom_pane/snapshots/codex_tui__bottom_pane__command_popup__tests__command_popup_default_items.snap
+@@ -3,6 +3,7 @@ source: tui/src/bottom_pane/command_popup.rs
+ expression: commands
+ ---
+ /model - choose what model and reasoning effort to use
++/effort - show active models and reasoning efforts
+ /ide - include current selection, open files, and other context from your IDE
+ /permissions - choose what Codex is allowed to do
+ /keymap - remap TUI shortcuts
+diff --git a/codex-rs/tui/src/chatwidget.rs b/codex-rs/tui/src/chatwidget.rs
+index 4e34536699..41a485773f 100644
+--- a/codex-rs/tui/src/chatwidget.rs
++++ b/codex-rs/tui/src/chatwidget.rs
+@@ -328,6 +328,7 @@ mod connectors;
+ mod constructor;
+ pub(crate) use self::connectors::ConnectorScopeGeneration;
+ use self::connectors::ConnectorsState;
++mod effort_command;
+ mod exec_state;
+ use self::exec_state::RunningCommand;
+ use self::exec_state::UnifiedExecProcessSummary;
+diff --git a/codex-rs/tui/src/chatwidget/effort_command.rs b/codex-rs/tui/src/chatwidget/effort_command.rs
+new file mode 100644
+index 0000000000..c3f3701879
+--- /dev/null
++++ b/codex-rs/tui/src/chatwidget/effort_command.rs
+@@ -0,0 +1,82 @@
++//! `/effort` handling for `ChatWidget`.
++//!
++//! The command is a local inspection action: it never queues a turn and never reaches the model.
++//! Status variants ask `App` to read live thread state from the app server; level variants reuse
++//! the same reasoning-effort update path as `/model` and the `Alt+,` / `Alt+.` shortcuts, so they
++//! only affect subsequent turns.
++
++use codex_protocol::config_types::ModeKind;
++
++use super::ChatWidget;
++use crate::app_event::AppEvent;
++use crate::effort_status::EffortStatusScope;
++use crate::effort_status::EffortStatusSnapshot;
++use crate::effort_status::parse_effort_level;
++
++pub(super) const EFFORT_USAGE: &str =
++    "Usage: /effort [all|parent|agents] or /effort <low|medium|high|xhigh|max>";
++
++impl ChatWidget {
++    /// Entry point for both `/effort` and `/effort <arg>`.
++    pub(crate) fn handle_effort_command(&mut self, args: &str) {
++        let trimmed = args.trim();
++        match EffortStatusScope::parse(trimmed) {
++            Ok(scope) => self.request_effort_status(scope, trimmed),
++            Err(unknown) => {
++                // A bare level such as `/effort high` adjusts the parent instead of reporting.
++                if let Some(effort) = parse_effort_level(&unknown) {
++                    self.apply_effort_level(effort);
++                } else {
++                    self.add_error_message(EFFORT_USAGE.to_string());
++                }
++            }
++        }
++    }
++
++    fn request_effort_status(&mut self, scope: EffortStatusScope, args: &str) {
++        let command = if args.is_empty() {
++            "/effort".to_string()
++        } else {
++            format!("/effort {args}")
++        };
++        self.app_event_tx
++            .send(AppEvent::RequestEffortStatus { command, scope });
++    }
++
++    fn apply_effort_level(&mut self, effort: codex_protocol::openai_models::ReasoningEffort) {
++        if self.collaboration_modes_enabled() && self.active_mode_kind() == ModeKind::Plan {
++            let warning = self.ultra_reasoning_concurrency_warning(&effort);
++            self.app_event_tx
++                .send(AppEvent::UpdatePlanModeReasoningEffort(Some(effort)));
++            if let Some(warning) = warning {
++                self.app_event_tx.send(AppEvent::InsertHistoryCell(Box::new(
++                    crate::history_cell::new_warning_event(warning),
++                )));
++            }
++        } else {
++            self.app_event_tx
++                .send(AppEvent::UpdateReasoningEffort(Some(effort)));
++        }
++    }
++
++    /// Appends the rendered `/effort` output once the background read finishes.
++    pub(crate) fn add_effort_status_output(
++        &mut self,
++        command: String,
++        snapshot: EffortStatusSnapshot,
++    ) {
++        self.add_to_history(crate::effort_status::new_effort_status_output(
++            command, snapshot,
++        ));
++    }
++
++    /// Model and reasoning effort the TUI currently believes the parent thread uses.
++    ///
++    /// Only used as a fallback when the live app-server read for the root thread fails.
++    pub(crate) fn effort_status_parent_fallback(&self) -> crate::effort_status::ParentFallback {
++        crate::effort_status::ParentFallback {
++            model: Some(self.current_model().to_string()).filter(|model| !model.is_empty()),
++            reasoning_effort: self.effective_reasoning_effort(),
++        }
++    }
++}
+diff --git a/codex-rs/tui/src/chatwidget/slash_dispatch.rs b/codex-rs/tui/src/chatwidget/slash_dispatch.rs
+index f67ece542e..863b2d2bac 100644
+--- a/codex-rs/tui/src/chatwidget/slash_dispatch.rs
++++ b/codex-rs/tui/src/chatwidget/slash_dispatch.rs
+@@ -310,6 +310,9 @@ impl ChatWidget {
+                 self.open_model_popup();
+                 self.defer_input_until_settings_applied();
+             }
++            SlashCommand::Effort => {
++                self.handle_effort_command("");
++            }
+             SlashCommand::Personality => {
+                 self.open_personality_popup();
+                 self.defer_input_until_settings_applied();
+@@ -740,6 +743,7 @@ impl ChatWidget {
+                     ),
+                 });
+             }
++            SlashCommand::Effort => self.handle_effort_command(trimmed),
+             SlashCommand::Cd => self.request_working_directory_change(trimmed),
+             SlashCommand::Pwd => {
+                 self.add_error_message("Usage: /pwd".to_string());
+@@ -1164,6 +1168,7 @@ impl ChatWidget {
+         }
+         match cmd {
+             SlashCommand::Ide
++            | SlashCommand::Effort
+             | SlashCommand::Status
+             | SlashCommand::Pwd
+             | SlashCommand::Usage
+diff --git a/codex-rs/tui/src/chatwidget/tests.rs b/codex-rs/tui/src/chatwidget/tests.rs
+index c7aaa1a7a5..8d3c9c4802 100644
+--- a/codex-rs/tui/src/chatwidget/tests.rs
++++ b/codex-rs/tui/src/chatwidget/tests.rs
+@@ -247,6 +247,8 @@ mod composer_submission;
+ mod computer_activity_tests;
+ #[path = "tests/config_errors_tests.rs"]
+ mod config_errors;
++#[path = "tests/effort_command_tests.rs"]
++mod effort_command_tests;
+ mod exec_flow;
+ mod goal_menu;
+ mod goal_validation;
+diff --git a/codex-rs/tui/src/chatwidget/tests/effort_command_tests.rs b/codex-rs/tui/src/chatwidget/tests/effort_command_tests.rs
+new file mode 100644
+index 0000000000..46d37e9e34
+--- /dev/null
++++ b/codex-rs/tui/src/chatwidget/tests/effort_command_tests.rs
+@@ -0,0 +1,138 @@
++//! `/effort` behaviour at the `ChatWidget` level.
++//!
++//! The central claim these tests defend is that `/effort` is a local inspection action: it asks
++//! `App` to read runtime state and it never puts anything on the op channel, so it cannot consume
++//! a model turn.
++
++use super::*;
++use crate::effort_status::EffortStatusScope;
++use codex_protocol::openai_models::ReasoningEffort as ReasoningEffortConfig;
++
++fn rendered_history(rx: &mut tokio::sync::mpsc::UnboundedReceiver<AppEvent>) -> Vec<String> {
++    let mut out = Vec::new();
++    while let Ok(event) = rx.try_recv() {
++        if let AppEvent::InsertHistoryCell(cell) = event {
++            out.push(lines_to_single_string(&cell.display_lines(/*width*/ 100)));
++        }
++    }
++    out
++}
++
++#[tokio::test]
++async fn effort_command_requests_runtime_state_without_sending_a_model_request() {
++    let (mut chat, mut rx, mut op_rx) = make_chatwidget_manual(/*model_override*/ None).await;
++
++    chat.dispatch_command(SlashCommand::Effort);
++
++    match rx.try_recv() {
++        Ok(AppEvent::RequestEffortStatus { command, scope }) => {
++            pretty_assertions::assert_eq!(command, "/effort");
++            pretty_assertions::assert_eq!(scope, EffortStatusScope::Active);
++        }
++        other => panic!("expected a runtime-state request, got {other:?}"),
++    }
++    assert!(
++        op_rx.try_recv().is_err(),
++        "/effort must not submit anything to the model"
++    );
++}
++
++#[tokio::test]
++async fn effort_scope_arguments_select_the_right_view() {
++    let cases = [
++        ("all", EffortStatusScope::All),
++        ("parent", EffortStatusScope::Parent),
++        ("agents", EffortStatusScope::Agents),
++        ("subagents", EffortStatusScope::Agents),
++    ];
++    for (arg, expected) in cases {
++        let (mut chat, mut rx, mut op_rx) = make_chatwidget_manual(/*model_override*/ None).await;
++        chat.dispatch_command_with_args(SlashCommand::Effort, arg.to_string(), Vec::new());
++
++        match rx.try_recv() {
++            Ok(AppEvent::RequestEffortStatus { command, scope }) => {
++                pretty_assertions::assert_eq!(command, format!("/effort {arg}"));
++                pretty_assertions::assert_eq!(scope, expected);
++            }
++            other => panic!("expected a runtime-state request for `{arg}`, got {other:?}"),
++        }
++        assert!(
++            op_rx.try_recv().is_err(),
++            "/effort {arg} must not submit an op"
++        );
++    }
++}
++
++#[tokio::test]
++async fn effort_level_argument_updates_the_parent_for_future_turns_only() {
++    let (mut chat, mut rx, mut op_rx) = make_chatwidget_manual(/*model_override*/ None).await;
++
++    chat.dispatch_command_with_args(SlashCommand::Effort, "high".to_string(), Vec::new());
++
++    match rx.try_recv() {
++        Ok(AppEvent::UpdateReasoningEffort(Some(effort))) => {
++            pretty_assertions::assert_eq!(effort, ReasoningEffortConfig::High);
++        }
++        other => panic!("expected a reasoning-effort update, got {other:?}"),
++    }
++    assert!(
++        op_rx.try_recv().is_err(),
++        "/effort high must not submit anything to the model"
++    );
++}
++
++#[tokio::test]
++async fn unknown_effort_argument_explains_the_usage() {
++    let (mut chat, mut rx, mut op_rx) = make_chatwidget_manual(/*model_override*/ None).await;
++
++    chat.dispatch_command_with_args(SlashCommand::Effort, "sideways".to_string(), Vec::new());
++
++    let rendered = rendered_history(&mut rx).join("\n");
++    assert!(
++        rendered.contains("/effort [all|parent|agents]"),
++        "expected the usage hint, got: {rendered}"
++    );
++    assert!(op_rx.try_recv().is_err());
++}
++
++#[tokio::test]
++async fn effort_output_reports_the_parent_model_and_effort() {
++    let (mut chat, mut rx, mut op_rx) = make_chatwidget_manual(/*model_override*/ None).await;
++    let fallback = chat.effort_status_parent_fallback();
++
++    let snapshot =
++        crate::effort_status::build_effort_status(crate::effort_status::EffortStatusInputs {
++            scope: EffortStatusScope::Active,
++            parent: None,
++            parent_fallback: fallback,
++            agents: &[],
++            max_agents: Some(4),
++            auto_routing_enabled: true,
++            note: None,
++        });
++    chat.add_effort_status_output("/effort".to_string(), snapshot);
++
++    let rendered = rendered_history(&mut rx).join("\n");
++    assert!(rendered.contains("/effort"), "got: {rendered}");
++    assert!(
++        rendered.contains("Model / reasoning status"),
++        "got: {rendered}"
++    );
++    assert!(rendered.contains("parent"), "got: {rendered}");
++    assert!(rendered.contains("No active subagents."), "got: {rendered}");
++    assert!(rendered.contains("Routing: enabled"), "got: {rendered}");
++    assert!(op_rx.try_recv().is_err());
++}
++
++#[tokio::test]
++async fn changing_the_model_changes_what_the_parent_row_falls_back_to() {
++    let (mut chat, _rx, _op_rx) = make_chatwidget_manual(/*model_override*/ None).await;
++
++    chat.set_reasoning_effort(Some(ReasoningEffortConfig::XHigh));
++    let fallback = chat.effort_status_parent_fallback();
++
++    pretty_assertions::assert_eq!(
++        fallback.reasoning_effort,
++        Some(ReasoningEffortConfig::XHigh)
++    );
++}
+diff --git a/codex-rs/tui/src/effort_status.rs b/codex-rs/tui/src/effort_status.rs
+new file mode 100644
+index 0000000000..ea78aa8dfa
+--- /dev/null
++++ b/codex-rs/tui/src/effort_status.rs
+@@ -0,0 +1,473 @@
++//! Presentation model for the `/effort` command.
++//!
++//! `/effort` answers one question: which model and reasoning effort is each agent in this session
++//! *actually* running with right now. The rows are built from live app-server thread records, so
++//! the values shown are the ones Codex resolved after spawn overrides, `[agents]` defaults, parent
++//! inheritance, and agent-role config files have all been applied. Nothing here reads
++//! `config.toml` or an agent role file.
++//!
++//! The module keeps the data shaping and rendering free of `App`/`ChatWidget` state so both can be
++//! unit- and snapshot-tested directly.
++
++use std::str::FromStr;
++
++use codex_app_server_protocol::SessionSource;
++use codex_app_server_protocol::Thread;
++use codex_app_server_protocol::ThreadActiveFlag;
++use codex_app_server_protocol::ThreadStatus;
++use codex_protocol::ThreadId;
++use codex_protocol::openai_models::ReasoningEffort as ReasoningEffortConfig;
++use codex_protocol::protocol::SubAgentSource;
++use ratatui::style::Stylize;
++use ratatui::text::Line;
++use ratatui::text::Span;
++
++use crate::history_cell::CompositeHistoryCell;
++use crate::history_cell::HistoryCell;
++use crate::history_cell::PlainHistoryCell;
++use crate::history_cell::plain_lines;
++use crate::width::display_width;
++
++/// Placeholder used whenever the runtime did not report a value.
++pub(crate) const UNKNOWN_VALUE: &str = "—";
++
++/// Minimum width before the aligned table collapses into stacked rows.
++const NARROW_LAYOUT_WIDTH: u16 = 56;
++
++const COLUMN_GAP: usize = 2;
++
++/// Which agents `/effort` should list.
++#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
++pub(crate) enum EffortStatusScope {
++    /// Parent plus subagents that are still open in this session.
++    #[default]
++    Active,
++    /// Parent plus every subagent this session spawned, including finished ones.
++    All,
++    /// Parent only.
++    Parent,
++    /// Subagents only.
++    Agents,
++}
++
++impl EffortStatusScope {
++    /// Parses the inline argument of `/effort`. Returns `None` for an empty argument.
++    pub(crate) fn parse(arg: &str) -> Result<Self, String> {
++        match arg.trim().to_ascii_lowercase().as_str() {
++            "" => Ok(Self::Active),
++            "all" => Ok(Self::All),
++            "parent" | "main" => Ok(Self::Parent),
++            "agents" | "subagents" | "workers" => Ok(Self::Agents),
++            other => Err(other.to_string()),
++        }
++    }
++
++    fn includes_parent(self) -> bool {
++        !matches!(self, Self::Agents)
++    }
++
++    fn includes_agents(self) -> bool {
++        !matches!(self, Self::Parent)
++    }
++
++    fn includes_finished_agents(self) -> bool {
++        matches!(self, Self::All)
++    }
++
++    fn title(self) -> &'static str {
++        match self {
++            Self::Active | Self::All => "Model / reasoning status",
++            Self::Parent => "Model / reasoning status — parent",
++            Self::Agents => "Model / reasoning status — subagents",
++        }
++    }
++}
++
++/// Live state of one agent, already reduced to display strings.
++#[derive(Clone, Debug, Eq, PartialEq)]
++pub(crate) struct EffortRow {
++    pub(crate) label: String,
++    pub(crate) model: String,
++    pub(crate) effort: String,
++    pub(crate) state: &'static str,
++    /// True when the row's model and effort both match the parent's.
++    pub(crate) inherited: bool,
++    pub(crate) is_parent: bool,
++}
++
++/// Everything `/effort` renders for one invocation.
++#[derive(Clone, Debug, Eq, PartialEq)]
++pub(crate) struct EffortStatusSnapshot {
++    pub(crate) scope: EffortStatusScope,
++    pub(crate) rows: Vec<EffortRow>,
++    pub(crate) active_agents: usize,
++    pub(crate) max_agents: Option<usize>,
++    pub(crate) auto_routing_enabled: bool,
++    /// Diagnostic shown when some runtime value could not be read.
++    pub(crate) note: Option<String>,
++}
++
++/// Values the TUI already holds for the parent thread, used when the live read is unavailable.
++#[derive(Clone, Debug, Default, Eq, PartialEq)]
++pub(crate) struct ParentFallback {
++    pub(crate) model: Option<String>,
++    pub(crate) reasoning_effort: Option<ReasoningEffortConfig>,
++}
++
++/// Runtime inputs gathered for one `/effort` invocation.
++pub(crate) struct EffortStatusInputs<'a> {
++    pub(crate) scope: EffortStatusScope,
++    /// Live record for the session's root thread, when the read succeeded.
++    pub(crate) parent: Option<&'a Thread>,
++    pub(crate) parent_fallback: ParentFallback,
++    /// Live records for every subagent thread descended from the root.
++    pub(crate) agents: &'a [Thread],
++    pub(crate) max_agents: Option<usize>,
++    pub(crate) auto_routing_enabled: bool,
++    pub(crate) note: Option<String>,
++}
++
++/// Reduces live thread records to the rows `/effort` prints.
++pub(crate) fn build_effort_status(inputs: EffortStatusInputs<'_>) -> EffortStatusSnapshot {
++    let EffortStatusInputs {
++        scope,
++        parent,
++        parent_fallback,
++        agents,
++        max_agents,
++        auto_routing_enabled,
++        note,
++    } = inputs;
++
++    let parent_model = parent
++        .and_then(|thread| thread.model.clone())
++        .or_else(|| parent_fallback.model.clone())
++        .filter(|model| !model.is_empty());
++    let parent_effort = parent
++        .and_then(|thread| thread.reasoning_effort.clone())
++        .or_else(|| parent_fallback.reasoning_effort.clone());
++
++    let mut rows = Vec::new();
++    if scope.includes_parent() {
++        rows.push(EffortRow {
++            label: "parent".to_string(),
++            model: display_model(parent_model.as_deref()),
++            effort: display_effort(parent_effort.as_ref()),
++            state: parent.map_or("unknown", |thread| thread_state_label(thread, true)),
++            inherited: false,
++            is_parent: true,
++        });
++    }
++
++    let mut active_agents = 0usize;
++    let mut agent_rows = Vec::new();
++    for thread in agents {
++        let finished = is_finished(&thread.status);
++        if !finished {
++            active_agents += 1;
++        }
++        if !scope.includes_agents() || (finished && !scope.includes_finished_agents()) {
++            continue;
++        }
++        let model = thread.model.clone().filter(|model| !model.is_empty());
++        let effort = thread.reasoning_effort.clone();
++        let inherited =
++            model.is_some() && model == parent_model && effort.is_some() && effort == parent_effort;
++        agent_rows.push((
++            thread.updated_at,
++            EffortRow {
++                label: agent_label(thread),
++                model: display_model(model.as_deref()),
++                effort: display_effort(effort.as_ref()),
++                state: thread_state_label(thread, false),
++                inherited,
++                is_parent: false,
++            },
++        ));
++    }
++    // Oldest spawn first so the transcript reads in the order the agents started.
++    agent_rows.sort_by_key(|(updated_at, _)| *updated_at);
++    rows.extend(agent_rows.into_iter().map(|(_, row)| row));
++
++    EffortStatusSnapshot {
++        scope,
++        rows,
++        active_agents,
++        max_agents,
++        auto_routing_enabled,
++        note,
++    }
++}
++
++/// Picks the most descriptive name Codex knows for a spawned agent thread.
++fn agent_label(thread: &Thread) -> String {
++    let source_role = match &thread.source {
++        SessionSource::SubAgent(SubAgentSource::ThreadSpawn {
++            agent_path,
++            agent_nickname,
++            agent_role,
++            ..
++        }) => {
++            let role = agent_role
++                .as_deref()
++                .map(str::trim)
++                .filter(|role| !role.is_empty());
++            let nickname = agent_nickname
++                .as_deref()
++                .map(str::trim)
++                .filter(|nickname| !nickname.is_empty());
++            let path = agent_path
++                .as_ref()
++                .map(|path| path.name().to_string())
++                .filter(|name| !name.is_empty());
++            role.map(ToOwned::to_owned)
++                .or_else(|| nickname.map(ToOwned::to_owned))
++                .or(path)
++        }
++        _ => None,
++    };
++    source_role
++        .or_else(|| {
++            thread
++                .agent_role
++                .as_deref()
++                .map(str::trim)
++                .filter(|role| !role.is_empty())
++                .map(ToOwned::to_owned)
++        })
++        .or_else(|| {
++            thread
++                .agent_nickname
++                .as_deref()
++                .map(str::trim)
++                .filter(|nickname| !nickname.is_empty())
++                .map(ToOwned::to_owned)
++        })
++        .unwrap_or_else(|| short_thread_id(&thread.id))
++}
++
++fn short_thread_id(thread_id: &str) -> String {
++    match ThreadId::from_string(thread_id) {
++        Ok(thread_id) => {
++            let rendered = thread_id.to_string();
++            rendered
++                .split('-')
++                .next_back()
++                .map(ToOwned::to_owned)
++                .unwrap_or(rendered)
++        }
++        Err(_) => thread_id.to_string(),
++    }
++}
++
++fn display_model(model: Option<&str>) -> String {
++    match model {
++        Some(model) => crate::model_catalog::model_display_name(model).to_string(),
++        None => UNKNOWN_VALUE.to_string(),
++    }
++}
++
++fn display_effort(effort: Option<&ReasoningEffortConfig>) -> String {
++    match effort {
++        Some(effort) => effort.to_string(),
++        None => UNKNOWN_VALUE.to_string(),
++    }
++}
++
++/// Maps the app-server thread status onto the vocabulary `/effort` prints.
++///
++/// The labels stay close to what Codex actually tracks: a spawned agent that has finished its turn
++/// but is still open is reported by the runtime as idle, not completed, so that is what we show.
++fn thread_state_label(thread: &Thread, is_parent: bool) -> &'static str {
++    match &thread.status {
++        ThreadStatus::Active { active_flags } => {
++            if active_flags.contains(&ThreadActiveFlag::WaitingOnApproval) {
++                "approval"
++            } else if active_flags.contains(&ThreadActiveFlag::WaitingOnUserInput) {
++                "waiting"
++            } else {
++                "working"
++            }
++        }
++        ThreadStatus::Idle => "idle",
++        ThreadStatus::SystemError => "failed",
++        ThreadStatus::NotLoaded if is_parent => "idle",
++        ThreadStatus::NotLoaded => "closed",
++    }
++}
++
++fn is_finished(status: &ThreadStatus) -> bool {
++    matches!(status, ThreadStatus::NotLoaded)
++}
++
++/// Reasoning efforts `/effort <level>` accepts as a parent override.
++pub(crate) fn parse_effort_level(arg: &str) -> Option<ReasoningEffortConfig> {
++    let arg = arg.trim().to_ascii_lowercase();
++    if arg.is_empty() {
++        return None;
++    }
++    let effort = ReasoningEffortConfig::from_str(&arg).ok()?;
++    // `Custom` is the catch-all for unknown wire values; treat it as "not a level".
++    match effort {
++        ReasoningEffortConfig::Custom(_) => None,
++        effort => Some(effort),
++    }
++}
++
++#[derive(Debug)]
++pub(crate) struct EffortStatusCell {
++    snapshot: EffortStatusSnapshot,
++}
++
++impl EffortStatusCell {
++    pub(crate) fn new(snapshot: EffortStatusSnapshot) -> Self {
++        Self { snapshot }
++    }
++
++    fn lines(&self, width: u16) -> Vec<Line<'static>> {
++        let mut lines: Vec<Line<'static>> = Vec::new();
++        lines.push(Line::from(
++            Span::from(self.snapshot.scope.title().to_string()).bold(),
++        ));
++        lines.push(Line::from(""));
++
++        if width < NARROW_LAYOUT_WIDTH {
++            lines.extend(self.narrow_rows());
++        } else {
++            lines.extend(self.table_rows());
++        }
++
++        // `rows` is only empty for `/effort agents` with nothing running; every other scope always
++        // carries the parent row, so one message covers both cases.
++        if self.snapshot.scope.includes_agents()
++            && !self.snapshot.rows.iter().any(|row| !row.is_parent)
++        {
++            if !self.snapshot.rows.is_empty() {
++                lines.push(Line::from(""));
++            }
++            lines.push(Line::from(Span::from("No active subagents.").dim()));
++        }
++
++        lines.push(Line::from(""));
++        lines.push(self.footer_line());
++        if let Some(note) = &self.snapshot.note {
++            lines.push(Line::from(Span::from(note.clone()).yellow()));
++        }
++        lines
++    }
++
++    fn table_rows(&self) -> Vec<Line<'static>> {
++        let headers = ["Role", "Model", "Effort", "State"];
++        let mut widths = headers.map(display_width);
++        for row in &self.snapshot.rows {
++            widths[0] = widths[0].max(display_width(&row.label));
++            widths[1] = widths[1].max(display_width(&row.model));
++            widths[2] = widths[2].max(display_width(&row.effort));
++            widths[3] = widths[3].max(display_width(row.state));
++        }
++
++        let mut lines = Vec::with_capacity(self.snapshot.rows.len() + 2);
++        lines.push(Line::from(
++            Span::from(pad_columns(
++                &headers.map(ToOwned::to_owned),
++                &widths,
++                /*pad_last*/ false,
++            ))
++            .dim(),
++        ));
++        let rule_width: usize =
++            widths.iter().sum::<usize>() + COLUMN_GAP * (widths.len().saturating_sub(1));
++        lines.push(Line::from(Span::from("─".repeat(rule_width)).dim()));
++
++        for row in &self.snapshot.rows {
++            let cells = [
++                row.label.clone(),
++                row.model.clone(),
++                row.effort.clone(),
++                row.state.to_string(),
++            ];
++            let mut spans = vec![Span::from(pad_columns(
++                &cells,
++                &widths,
++                /*pad_last*/ row.inherited,
++            ))];
++            if row.inherited {
++                spans.push(Span::from("  inherited").dim());
++            }
++            let line = Line::from(spans);
++            lines.push(if row.is_parent { line.bold() } else { line });
++        }
++        lines
++    }
++
++    fn narrow_rows(&self) -> Vec<Line<'static>> {
++        let mut lines = Vec::with_capacity(self.snapshot.rows.len() * 2);
++        for row in &self.snapshot.rows {
++            let label = Line::from(Span::from(row.label.clone()));
++            lines.push(if row.is_parent { label.bold() } else { label });
++            let mut detail = format!("  {} · {} · {}", row.model, row.effort, row.state);
++            if row.inherited {
++                detail.push_str(" · inherited");
++            }
++            lines.push(Line::from(Span::from(detail).dim()));
++        }
++        lines
++    }
++
++    fn footer_line(&self) -> Line<'static> {
++        let routing = if self.snapshot.auto_routing_enabled {
++            "enabled"
++        } else {
++            "disabled"
++        };
++        let workers = match self.snapshot.max_agents {
++            Some(max_agents) => format!("{}/{max_agents}", self.snapshot.active_agents),
++            None => self.snapshot.active_agents.to_string(),
++        };
++        Line::from(Span::from(format!("Routing: {routing} · Workers: {workers}")).dim())
++    }
++}
++
++impl HistoryCell for EffortStatusCell {
++    fn display_lines(&self, width: u16) -> Vec<Line<'static>> {
++        self.lines(width)
++    }
++
++    fn raw_lines(&self) -> Vec<Line<'static>> {
++        plain_lines(self.lines(u16::MAX))
++    }
++}
++
++fn pad_columns(cells: &[String; 4], widths: &[usize; 4], pad_last: bool) -> String {
++    let mut out = String::new();
++    for (index, cell) in cells.iter().enumerate() {
++        out.push_str(cell);
++        let is_last = index + 1 == cells.len();
++        if is_last && !pad_last {
++            break;
++        }
++        let padding = widths[index].saturating_sub(display_width(cell));
++        out.push_str(&" ".repeat(padding));
++        if !is_last {
++            out.push_str(&" ".repeat(COLUMN_GAP));
++        }
++    }
++    out
++}
++
++/// Builds the transcript cell for one `/effort` invocation, echoing the command first so the
++/// output reads like the other local commands.
++pub(crate) fn new_effort_status_output(
++    command: String,
++    snapshot: EffortStatusSnapshot,
++) -> CompositeHistoryCell {
++    let echo = PlainHistoryCell::new(vec![Line::from(Span::from(command).magenta())]);
++    CompositeHistoryCell::new(vec![
++        Box::new(echo),
++        Box::new(EffortStatusCell::new(snapshot)),
++    ])
++}
++
++#[cfg(test)]
++#[path = "effort_status_tests.rs"]
++mod tests;
+diff --git a/codex-rs/tui/src/effort_status_tests.rs b/codex-rs/tui/src/effort_status_tests.rs
+new file mode 100644
+index 0000000000..f739994f99
+--- /dev/null
++++ b/codex-rs/tui/src/effort_status_tests.rs
+@@ -0,0 +1,458 @@
++use super::*;
++
++use codex_app_server_protocol::SessionSource as ApiSessionSource;
++use codex_app_server_protocol::ThreadStatus;
++use codex_protocol::AgentPath;
++use codex_protocol::ThreadId;
++use codex_protocol::openai_models::ReasoningEffort as ReasoningEffortConfig;
++use codex_protocol::protocol::SubAgentSource;
++use codex_utils_absolute_path::AbsolutePathBuf;
++use pretty_assertions::assert_eq;
++
++fn abs_path() -> AbsolutePathBuf {
++    AbsolutePathBuf::from_absolute_path(if cfg!(windows) {
++        std::path::PathBuf::from("C:\\workspace")
++    } else {
++        std::path::PathBuf::from("/workspace")
++    })
++    .expect("absolute path")
++}
++
++fn base_thread(id: &str) -> Thread {
++    Thread {
++        id: id.to_string(),
++        environments: None,
++        extra: None,
++        session_id: "session".to_string(),
++        forked_from_id: None,
++        parent_thread_id: None,
++        preview: String::new(),
++        ephemeral: false,
++        section: None,
++        section_entered_at: None,
++        project_id: None,
++        history_mode: Default::default(),
++        model_provider: "openai".to_string(),
++        model: None,
++        reasoning_effort: None,
++        created_at: 0,
++        updated_at: 0,
++        recency_at: None,
++        status: ThreadStatus::Idle,
++        path: None,
++        cwd: abs_path(),
++        cli_version: "0.0.0".to_string(),
++        originator: None,
++        source: ApiSessionSource::Cli,
++        can_accept_direct_input: None,
++        thread_source: None,
++        agent_nickname: None,
++        agent_role: None,
++        git_info: None,
++        name: None,
++        daybreak_enabled: None,
++        turns: Vec::new(),
++    }
++}
++
++fn parent_thread(model: &str, effort: ReasoningEffortConfig, status: ThreadStatus) -> Thread {
++    let mut thread = base_thread("01998f00-0000-7000-8000-000000000000");
++    thread.model = Some(model.to_string());
++    thread.reasoning_effort = Some(effort);
++    thread.status = status;
++    thread
++}
++
++fn agent_thread(
++    id: &str,
++    role: &str,
++    model: Option<&str>,
++    effort: Option<ReasoningEffortConfig>,
++    status: ThreadStatus,
++    updated_at: i64,
++) -> Thread {
++    let mut thread = base_thread(id);
++    thread.model = model.map(ToOwned::to_owned);
++    thread.reasoning_effort = effort;
++    thread.status = status;
++    thread.updated_at = updated_at;
++    thread.agent_role = Some(role.to_string());
++    thread.source = ApiSessionSource::SubAgent(SubAgentSource::ThreadSpawn {
++        parent_thread_id: ThreadId::from_string("01998f00-0000-7000-8000-000000000000")
++            .expect("thread id"),
++        depth: 1,
++        agent_path: AgentPath::root().resolve(role).ok(),
++        agent_nickname: None,
++        agent_role: Some(role.to_string()),
++    });
++    thread
++}
++
++fn running() -> ThreadStatus {
++    ThreadStatus::Active {
++        active_flags: Vec::new(),
++    }
++}
++
++fn snapshot_with(
++    scope: EffortStatusScope,
++    parent: &Thread,
++    agents: &[Thread],
++) -> EffortStatusSnapshot {
++    build_effort_status(EffortStatusInputs {
++        scope,
++        parent: Some(parent),
++        parent_fallback: ParentFallback::default(),
++        agents,
++        max_agents: Some(4),
++        auto_routing_enabled: true,
++        note: None,
++    })
++}
++
++fn rendered(snapshot: EffortStatusSnapshot, width: u16) -> String {
++    EffortStatusCell::new(snapshot)
++        .display_lines(width)
++        .iter()
++        .map(|line| line.to_string().trim_end().to_string())
++        .collect::<Vec<_>>()
++        .join("\n")
++}
++
++#[test]
++fn scope_parses_supported_arguments() {
++    assert_eq!(EffortStatusScope::parse(""), Ok(EffortStatusScope::Active));
++    assert_eq!(
++        EffortStatusScope::parse(" All "),
++        Ok(EffortStatusScope::All)
++    );
++    assert_eq!(
++        EffortStatusScope::parse("parent"),
++        Ok(EffortStatusScope::Parent)
++    );
++    assert_eq!(
++        EffortStatusScope::parse("subagents"),
++        Ok(EffortStatusScope::Agents)
++    );
++    assert_eq!(EffortStatusScope::parse("nope"), Err("nope".to_string()));
++}
++
++#[test]
++fn effort_levels_parse_and_reject_unknown_values() {
++    assert_eq!(parse_effort_level("low"), Some(ReasoningEffortConfig::Low));
++    assert_eq!(
++        parse_effort_level(" XHigh "),
++        Some(ReasoningEffortConfig::XHigh)
++    );
++    assert_eq!(parse_effort_level("banana"), None);
++    assert_eq!(parse_effort_level(""), None);
++}
++
++#[test]
++fn parent_only_session_reports_parent_model_and_effort() {
++    let parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::Medium, running());
++    let snapshot = snapshot_with(EffortStatusScope::Active, &parent, &[]);
++
++    assert_eq!(snapshot.rows.len(), 1);
++    assert_eq!(snapshot.rows[0].label, "parent");
++    assert_eq!(snapshot.rows[0].model, "gpt-5.6-sol");
++    assert_eq!(snapshot.rows[0].effort, "medium");
++    assert_eq!(snapshot.rows[0].state, "working");
++    assert_eq!(snapshot.active_agents, 0);
++    assert!(rendered(snapshot, 100).contains("No active subagents."));
++}
++
++#[test]
++fn single_worker_reports_its_own_model_effort_and_state() {
++    let parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::Medium, running());
++    let agents = [agent_thread(
++        "01998f00-0000-7000-8000-000000000001",
++        "explorer_low",
++        Some("gpt-5.6-luna"),
++        Some(ReasoningEffortConfig::Low),
++        running(),
++        10,
++    )];
++    let snapshot = snapshot_with(EffortStatusScope::Active, &parent, &agents);
++
++    assert_eq!(snapshot.rows.len(), 2);
++    let worker = &snapshot.rows[1];
++    assert_eq!(worker.label, "explorer_low");
++    assert_eq!(worker.model, "gpt-5.6-luna");
++    assert_eq!(worker.effort, "low");
++    assert_eq!(worker.state, "working");
++    assert!(!worker.inherited);
++    assert_eq!(snapshot.active_agents, 1);
++}
++
++#[test]
++fn multiple_workers_keep_distinct_models_and_efforts() {
++    let parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::Medium, running());
++    let agents = [
++        agent_thread(
++            "01998f00-0000-7000-8000-000000000001",
++            "explorer_low",
++            Some("gpt-5.6-luna"),
++            Some(ReasoningEffortConfig::Low),
++            running(),
++            10,
++        ),
++        agent_thread(
++            "01998f00-0000-7000-8000-000000000002",
++            "debugger_high",
++            Some("gpt-5.6-sol"),
++            Some(ReasoningEffortConfig::High),
++            running(),
++            20,
++        ),
++        agent_thread(
++            "01998f00-0000-7000-8000-000000000003",
++            "verifier_low",
++            Some("gpt-5.6-terra"),
++            Some(ReasoningEffortConfig::Low),
++            ThreadStatus::Active {
++                active_flags: vec![ThreadActiveFlag::WaitingOnUserInput],
++            },
++            30,
++        ),
++    ];
++    let snapshot = snapshot_with(EffortStatusScope::Active, &parent, &agents);
++
++    let shown: Vec<_> = snapshot
++        .rows
++        .iter()
++        .map(|row| {
++            (
++                row.label.as_str(),
++                row.model.as_str(),
++                row.effort.as_str(),
++                row.state,
++            )
++        })
++        .collect();
++    assert_eq!(
++        shown,
++        vec![
++            ("parent", "gpt-5.6-sol", "medium", "working"),
++            ("explorer_low", "gpt-5.6-luna", "low", "working"),
++            ("debugger_high", "gpt-5.6-sol", "high", "working"),
++            ("verifier_low", "gpt-5.6-terra", "low", "waiting"),
++        ]
++    );
++    assert_eq!(snapshot.active_agents, 3);
++}
++
++#[test]
++fn inherited_worker_shows_resolved_parent_values() {
++    let parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::High, running());
++    let agents = [agent_thread(
++        "01998f00-0000-7000-8000-000000000001",
++        "explorer",
++        Some("gpt-5.6-sol"),
++        Some(ReasoningEffortConfig::High),
++        running(),
++        10,
++    )];
++    let snapshot = snapshot_with(EffortStatusScope::Active, &parent, &agents);
++
++    let worker = &snapshot.rows[1];
++    assert_eq!(worker.model, "gpt-5.6-sol");
++    assert_eq!(worker.effort, "high");
++    assert!(worker.inherited);
++    assert!(rendered(snapshot, 100).contains("inherited"));
++}
++
++#[test]
++fn explicit_override_is_not_marked_inherited() {
++    let parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::High, running());
++    let agents = [agent_thread(
++        "01998f00-0000-7000-8000-000000000001",
++        "explorer_low",
++        Some("gpt-5.6-luna"),
++        Some(ReasoningEffortConfig::Low),
++        running(),
++        10,
++    )];
++    let snapshot = snapshot_with(EffortStatusScope::Active, &parent, &agents);
++    assert!(!snapshot.rows[1].inherited);
++}
++
++#[test]
++fn finished_and_failed_workers_are_not_reported_as_running() {
++    let parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::Medium, running());
++    let agents = [
++        agent_thread(
++            "01998f00-0000-7000-8000-000000000001",
++            "explorer_low",
++            Some("gpt-5.6-luna"),
++            Some(ReasoningEffortConfig::Low),
++            ThreadStatus::NotLoaded,
++            10,
++        ),
++        agent_thread(
++            "01998f00-0000-7000-8000-000000000002",
++            "debugger_high",
++            Some("gpt-5.6-sol"),
++            Some(ReasoningEffortConfig::High),
++            ThreadStatus::SystemError,
++            20,
++        ),
++        agent_thread(
++            "01998f00-0000-7000-8000-000000000003",
++            "implementer_medium",
++            Some("gpt-5.6-terra"),
++            Some(ReasoningEffortConfig::Medium),
++            ThreadStatus::Idle,
++            30,
++        ),
++    ];
++
++    let active = snapshot_with(EffortStatusScope::Active, &parent, &agents);
++    // The closed agent is hidden from the default scope; the errored and idle ones remain.
++    assert_eq!(
++        active
++            .rows
++            .iter()
++            .map(|row| (row.label.as_str(), row.state))
++            .collect::<Vec<_>>(),
++        vec![
++            ("parent", "working"),
++            ("debugger_high", "failed"),
++            ("implementer_medium", "idle"),
++        ]
++    );
++    assert_eq!(active.active_agents, 2);
++
++    let all = snapshot_with(EffortStatusScope::All, &parent, &agents);
++    assert_eq!(
++        all.rows
++            .iter()
++            .map(|row| (row.label.as_str(), row.state))
++            .collect::<Vec<_>>(),
++        vec![
++            ("parent", "working"),
++            ("explorer_low", "closed"),
++            ("debugger_high", "failed"),
++            ("implementer_medium", "idle"),
++        ]
++    );
++}
++
++#[test]
++fn parent_and_agents_scopes_filter_rows() {
++    let parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::Medium, running());
++    let agents = [agent_thread(
++        "01998f00-0000-7000-8000-000000000001",
++        "explorer_low",
++        Some("gpt-5.6-luna"),
++        Some(ReasoningEffortConfig::Low),
++        running(),
++        10,
++    )];
++
++    let parent_only = snapshot_with(EffortStatusScope::Parent, &parent, &agents);
++    assert_eq!(parent_only.rows.len(), 1);
++    assert!(parent_only.rows[0].is_parent);
++
++    let agents_only = snapshot_with(EffortStatusScope::Agents, &parent, &agents);
++    assert_eq!(agents_only.rows.len(), 1);
++    assert_eq!(agents_only.rows[0].label, "explorer_low");
++}
++
++#[test]
++fn parent_fallback_is_used_when_the_live_read_is_unavailable() {
++    let snapshot = build_effort_status(EffortStatusInputs {
++        scope: EffortStatusScope::Active,
++        parent: None,
++        parent_fallback: ParentFallback {
++            model: Some("gpt-6-astra".to_string()),
++            reasoning_effort: Some(ReasoningEffortConfig::XHigh),
++        },
++        agents: &[],
++        max_agents: None,
++        auto_routing_enabled: false,
++        note: Some("thread/read failed".to_string()),
++    });
++
++    assert_eq!(snapshot.rows[0].model, "gpt-6-astra");
++    assert_eq!(snapshot.rows[0].effort, "xhigh");
++    assert_eq!(snapshot.rows[0].state, "unknown");
++    let output = rendered(snapshot, 100);
++    assert!(output.contains("Routing: disabled"));
++    assert!(output.contains("thread/read failed"));
++}
++
++#[test]
++fn missing_runtime_values_render_as_unknown() {
++    let mut parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::Medium, running());
++    parent.reasoning_effort = None;
++    let agents = [agent_thread(
++        "01998f00-0000-7000-8000-000000000001",
++        "explorer_low",
++        None,
++        None,
++        running(),
++        10,
++    )];
++    let snapshot = snapshot_with(EffortStatusScope::Active, &parent, &agents);
++    assert_eq!(snapshot.rows[0].effort, UNKNOWN_VALUE);
++    assert_eq!(snapshot.rows[1].model, UNKNOWN_VALUE);
++    assert!(!snapshot.rows[1].inherited);
++}
++
++#[test]
++fn wide_layout_renders_an_aligned_table() {
++    let parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::Medium, running());
++    let agents = [
++        agent_thread(
++            "01998f00-0000-7000-8000-000000000001",
++            "explorer_low",
++            Some("gpt-5.6-luna"),
++            Some(ReasoningEffortConfig::Low),
++            running(),
++            10,
++        ),
++        agent_thread(
++            "01998f00-0000-7000-8000-000000000002",
++            "debugger_high",
++            Some("gpt-5.6-sol"),
++            Some(ReasoningEffortConfig::High),
++            running(),
++            20,
++        ),
++    ];
++    let snapshot = snapshot_with(EffortStatusScope::Active, &parent, &agents);
++    insta::assert_snapshot!("effort_status_wide", rendered(snapshot, 100));
++}
++
++#[test]
++fn narrow_layout_stacks_rows_without_overflowing() {
++    let parent = parent_thread("gpt-5.6-sol", ReasoningEffortConfig::Medium, running());
++    let agents = [agent_thread(
++        "01998f00-0000-7000-8000-000000000001",
++        "explorer_low",
++        Some("gpt-5.6-luna"),
++        Some(ReasoningEffortConfig::Low),
++        running(),
++        10,
++    )];
++    let snapshot = snapshot_with(EffortStatusScope::Active, &parent, &agents);
++    let output = rendered(snapshot, 40);
++    for line in output.lines() {
++        assert!(
++            display_width(line) <= 40,
++            "line wider than the terminal: {line:?}"
++        );
++    }
++    insta::assert_snapshot!("effort_status_narrow", output);
++}
++
++#[test]
++fn agent_label_falls_back_to_nickname_then_thread_id() {
++    let mut nickname_only = base_thread("01998f00-0000-7000-8000-000000000009");
++    nickname_only.agent_nickname = Some("Cardamom".to_string());
++    assert_eq!(agent_label(&nickname_only), "Cardamom");
++
++    let bare = base_thread("01998f00-0000-7000-8000-00000000000a");
++    assert_eq!(agent_label(&bare), "00000000000a");
++}
+diff --git a/codex-rs/tui/src/lib.rs b/codex-rs/tui/src/lib.rs
+index 43591eceed..b7be3ab66c 100644
+--- a/codex-rs/tui/src/lib.rs
++++ b/codex-rs/tui/src/lib.rs
+@@ -139,6 +139,7 @@ mod diff_model;
+ mod diff_render;
+ mod dynamic_tools;
+ mod dynamic_tools_mcp;
++mod effort_status;
+ mod exec_cell;
+ mod exec_command;
+ mod external_agent_config_migration;
+diff --git a/codex-rs/tui/src/slash_command.rs b/codex-rs/tui/src/slash_command.rs
+index 99fea9eee7..6e84454658 100644
+--- a/codex-rs/tui/src/slash_command.rs
++++ b/codex-rs/tui/src/slash_command.rs
+@@ -13,6 +13,7 @@ pub enum SlashCommand {
+     // DO NOT ALPHA-SORT! Enum order is presentation order in the popup, so
+     // more frequently used commands should be listed first.
+     Model,
++    Effort,
+     Ide,
+     Permissions,
+     Keymap,
+@@ -124,6 +125,7 @@ impl SlashCommand {
+             SlashCommand::MemoryDrop => "DO NOT USE",
+             SlashCommand::MemoryUpdate => "DO NOT USE",
+             SlashCommand::Model => "choose what model and reasoning effort to use",
++            SlashCommand::Effort => "show active models and reasoning efforts",
+             SlashCommand::Ide => {
+                 "include current selection, open files, and other context from your IDE"
+             }
+@@ -163,6 +165,7 @@ impl SlashCommand {
+         matches!(
+             self,
+             SlashCommand::Review
++                | SlashCommand::Effort
+                 | SlashCommand::Rename
+                 | SlashCommand::New
+                 | SlashCommand::Clear
+@@ -191,6 +194,7 @@ impl SlashCommand {
+             self,
+             SlashCommand::Copy
+                 | SlashCommand::Agents
++                | SlashCommand::Effort
+                 | SlashCommand::Export
+                 | SlashCommand::Raw
+                 | SlashCommand::Diff
+@@ -230,6 +234,7 @@ impl SlashCommand {
+             SlashCommand::Diff
+             | SlashCommand::Resume
+             | SlashCommand::Model
++            | SlashCommand::Effort
+             | SlashCommand::Personality
+             | SlashCommand::Permissions
+             | SlashCommand::Copy
+@@ -320,6 +325,32 @@ mod tests {
+         assert!(SlashCommand::App.available_during_task());
+     }
+ 
++    #[test]
++    fn effort_command_is_registered_with_its_description() {
++        assert_eq!(SlashCommand::Effort.command(), "effort");
++        assert_eq!(SlashCommand::from_str("effort"), Ok(SlashCommand::Effort));
++        assert_eq!(
++            SlashCommand::Effort.description(),
++            "show active models and reasoning efforts"
++        );
++    }
++
++    #[test]
++    fn effort_command_is_offered_in_autocomplete() {
++        assert!(
++            super::built_in_slash_commands()
++                .iter()
++                .any(|(name, command)| *name == "effort" && *command == SlashCommand::Effort)
++        );
++    }
++
++    #[test]
++    fn effort_command_is_a_local_read_available_everywhere() {
++        assert!(SlashCommand::Effort.available_during_task());
++        assert!(SlashCommand::Effort.available_in_side_conversation());
++        assert!(SlashCommand::Effort.supports_inline_args());
++    }
++
+     #[test]
+     fn auto_review_command_is_approve() {
+         assert_eq!(SlashCommand::AutoReview.command(), "approve");
+diff --git a/codex-rs/tui/src/snapshots/codex_tui__effort_status__tests__effort_status_narrow.snap b/codex-rs/tui/src/snapshots/codex_tui__effort_status__tests__effort_status_narrow.snap
+new file mode 100644
+index 0000000000..218ed00a34
+--- /dev/null
++++ b/codex-rs/tui/src/snapshots/codex_tui__effort_status__tests__effort_status_narrow.snap
+@@ -0,0 +1,12 @@
++---
++source: tui/src/effort_status_tests.rs
++expression: output
++---
++Model / reasoning status
++
++parent
++  gpt-5.6-sol · medium · working
++explorer_low
++  gpt-5.6-luna · low · working
++
++Routing: enabled · Workers: 1/4
+diff --git a/codex-rs/tui/src/snapshots/codex_tui__effort_status__tests__effort_status_wide.snap b/codex-rs/tui/src/snapshots/codex_tui__effort_status__tests__effort_status_wide.snap
+new file mode 100644
+index 0000000000..455e45f4eb
+--- /dev/null
++++ b/codex-rs/tui/src/snapshots/codex_tui__effort_status__tests__effort_status_wide.snap
+@@ -0,0 +1,13 @@
++---
++source: tui/src/effort_status_tests.rs
++expression: "rendered(snapshot, 100)"
++---
++Model / reasoning status
++
++Role           Model         Effort  State
++────────────────────────────────────────────
++parent         gpt-5.6-sol   medium  working
++explorer_low   gpt-5.6-luna  low     working
++debugger_high  gpt-5.6-sol   high    working
++
++Routing: enabled · Workers: 2/4
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_server_auth_not_required.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_server_auth_not_required.snap
+index 701080e695..1f3e75fffc 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_server_auth_not_required.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_server_auth_not_required.snap
+@@ -5,7 +5,7 @@ expression: rendered
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │  Model:            gpt-5.6-sol (reasoning none, summaries auto)             │
+ │  Model provider:   server-ollama                                            │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_server_auth_required.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_server_auth_required.snap
+index d31fdf2a03..2c50e25a19 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_server_auth_required.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_server_auth_required.snap
+@@ -5,7 +5,7 @@ expression: rendered
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_cached_limits_hide_credits_without_flag.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_cached_limits_hide_credits_without_flag.snap
+index c7d89b17aa..62d9fa571d 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_cached_limits_hide_credits_without_flag.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_cached_limits_hide_credits_without_flag.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_credits_and_limits.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_credits_and_limits.snap
+index c1636b6c15..60bd52395e 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_credits_and_limits.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_credits_and_limits.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_enterprise_monthly_credit_limit.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_enterprise_monthly_credit_limit.snap
+index 765ad8d3a7..3c07bfa80e 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_enterprise_monthly_credit_limit.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_enterprise_monthly_credit_limit.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭───────────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                         │
++│  >_ OpenAI Codex (v0.155.0)                                                       │
+ │                                                                                   │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date                     │
+ │ information on rate limits and credits                                            │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_forked_from.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_forked_from.snap
+index 152575179e..8cb3cbe8d4 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_forked_from.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_forked_from.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_monthly_limit.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_monthly_limit.snap
+index 7a4f58a823..ccc7f43305 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_monthly_limit.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_monthly_limit.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_reasoning_details.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_reasoning_details.snap
+index 96b2ed1648..244114165f 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_reasoning_details.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_includes_reasoning_details.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭───────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                 │
++│  >_ OpenAI Codex (v0.155.0)                                               │
+ │                                                                           │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date             │
+ │ information on rate limits and credits                                    │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_active_user_defined_profile.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_active_user_defined_profile.snap
+index 4604b26f7e..898a598ab4 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_active_user_defined_profile.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_active_user_defined_profile.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭───────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                             │
++│  >_ OpenAI Codex (v0.155.0)                                           │
+ │                                                                       │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date         │
+ │ information on rate limits and credits                                │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_auto_review_permissions.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_auto_review_permissions.snap
+index c739d55075..c9ffcb984c 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_auto_review_permissions.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_auto_review_permissions.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭───────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                             │
++│  >_ OpenAI Codex (v0.155.0)                                           │
+ │                                                                       │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date         │
+ │ information on rate limits and credits                                │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_chatgpt_plan_without_email.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_chatgpt_plan_without_email.snap
+index 0aba51f99a..81d717d9ca 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_chatgpt_plan_without_email.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_chatgpt_plan_without_email.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭──────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                │
++│  >_ OpenAI Codex (v0.155.0)                                              │
+ │                                                                          │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date            │
+ │ information on rate limits and credits                                   │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_missing_limits_message.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_missing_limits_message.snap
+index 533be27976..4d3119d356 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_missing_limits_message.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_missing_limits_message.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_refreshing_limits_notice.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_refreshing_limits_notice.snap
+index 631982bcf9..d3e6d86f5d 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_refreshing_limits_notice.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_refreshing_limits_notice.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_stale_limits_message.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_stale_limits_message.snap
+index 8facd56275..eb9a7e77aa 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_stale_limits_message.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_stale_limits_message.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_unavailable_limits_message.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_unavailable_limits_message.snap
+index d46a483e4b..dc0c972f83 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_unavailable_limits_message.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_shows_unavailable_limits_message.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_treats_refreshing_empty_limits_as_unavailable.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_treats_refreshing_empty_limits_as_unavailable.snap
+index d46a483e4b..dc0c972f83 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_treats_refreshing_empty_limits_as_unavailable.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_treats_refreshing_empty_limits_as_unavailable.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_truncates_halfwidth_kana_in_narrow_terminal.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_truncates_halfwidth_kana_in_narrow_terminal.snap
+index 17442d7076..2747c909f5 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_truncates_halfwidth_kana_in_narrow_terminal.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_truncates_halfwidth_kana_in_narrow_terminal.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)              │
++│  >_ OpenAI Codex (v0.155.0)            │
+ │                                        │
+ │ Visit                                  │
+ │ https://chatgpt.com/codex/settings/usa │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_truncates_in_narrow_terminal.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_truncates_in_narrow_terminal.snap
+index 6b28b53b62..4fbc484c71 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_truncates_in_narrow_terminal.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_truncates_in_narrow_terminal.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                          │
++│  >_ OpenAI Codex (v0.155.0)                                        │
+ │                                                                    │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date      │
+ │ information on rate limits and credits                             │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_uses_default_reasoning_when_config_empty.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_uses_default_reasoning_when_config_empty.snap
+index 9683beed97..b600713dba 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_uses_default_reasoning_when_config_empty.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_uses_default_reasoning_when_config_empty.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭─────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                   │
++│  >_ OpenAI Codex (v0.155.0)                                                 │
+ │                                                                             │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date               │
+ │ information on rate limits and credits                                      │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_uses_generic_limit_labels_for_unsupported_windows.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_uses_generic_limit_labels_for_unsupported_windows.snap
+index 6b6fad683b..ff5a9f2d1d 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_uses_generic_limit_labels_for_unsupported_windows.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_uses_generic_limit_labels_for_unsupported_windows.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭──────────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                    │
++│  >_ OpenAI Codex (v0.155.0)                                                  │
+ │                                                                              │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date                │
+ │ information on rate limits and credits                                       │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_wraps_enterprise_monthly_credit_details_in_narrow_terminal.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_wraps_enterprise_monthly_credit_details_in_narrow_terminal.snap
+index cf6fa2c2ec..7804106ef8 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_wraps_enterprise_monthly_credit_details_in_narrow_terminal.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__status_snapshot_wraps_enterprise_monthly_credit_details_in_narrow_terminal.snap
+@@ -5,7 +5,7 @@ expression: sanitized
+ /status
+ 
+ ╭────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                  │
++│  >_ OpenAI Codex (v0.155.0)                │
+ │                                            │
+ │ Visit                                      │
+ │ https://chatgpt.com/codex/settings/usage   │
+diff --git a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__transcript_overlay_status_rate_limit_refresh.snap b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__transcript_overlay_status_rate_limit_refresh.snap
+index 9dce4bfbba..1f39084995 100644
+--- a/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__transcript_overlay_status_rate_limit_refresh.snap
++++ b/codex-rs/tui/src/status/snapshots/codex_tui__status__tests__transcript_overlay_status_rate_limit_refresh.snap
+@@ -7,7 +7,7 @@ before:
+ /status
+ 
+ ╭──────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                │
++│  >_ OpenAI Codex (v0.155.0)                                              │
+ │                                                                          │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date            │
+ │ information on rate limits and credits                                   │
+@@ -39,7 +39,7 @@ after:
+ /status
+ 
+ ╭───────────────────────────────────────────────────────────────────────────╮
+-│  >_ OpenAI Codex (v0.0.0)                                                 │
++│  >_ OpenAI Codex (v0.155.0)                                               │
+ │                                                                           │
+ │ Visit https://chatgpt.com/codex/settings/usage for up-to-date             │
+ │ information on rate limits and credits                                    │

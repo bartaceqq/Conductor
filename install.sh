@@ -68,6 +68,20 @@ fi
 
 # ---------------------------------------------------------------- build
 BUILT_BIN="$RUST_DIR/target/release/codex"
+
+if [[ ! -d "$SOURCE_DIR" || ! -d "$RUST_DIR" ]]; then
+  say "Cloning Codex repository and applying patch"
+  command -v git >/dev/null || die "git not found"
+  git clone https://github.com/openai/codex.git "$SOURCE_DIR"
+  (
+    cd "$SOURCE_DIR"
+    git checkout -b orchestrator/effort-0.155.0 rust-v0.155.0
+    git apply "$PROJECT_DIR/patches/codex-orchestrator.patch"
+    git add .
+    git commit -m "Add /effort and multi-model routing"
+  )
+fi
+
 if [[ "$SKIP_BUILD" == 0 ]]; then
   command -v cargo >/dev/null || die "cargo not found; install Rust or pass --skip-build"
   say "Building the patched Codex (release)"
