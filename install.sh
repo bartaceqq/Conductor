@@ -70,6 +70,12 @@ die() { printf '\033[31merror:\033[0m %s\n' "$*" >&2; exit 1; }
 # hundred megabytes, so discovering a missing toolchain afterwards wastes a lot of time and disk.
 say "Checking prerequisites"
 
+# Upstream pins its compiler in rust-toolchain.toml. Distro Rust ignores the pin, and newer compilers
+# have failed on Codex (0.156.1 on Rust 1.98: "queries overflow the depth limit"). Prefer rustup.
+if [[ -x "$HOME/.cargo/bin/rustup" ]]; then
+  PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 missing=()
 command -v git     >/dev/null || missing+=("git")
 command -v python3 >/dev/null || missing+=("python3")

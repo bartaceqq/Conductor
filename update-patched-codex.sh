@@ -40,6 +40,12 @@ say() { printf '\033[1m==>\033[0m %s\n' "$*"; }
 die() { printf '\033[31merror:\033[0m %s\n' "$*" >&2; exit 1; }
 
 [[ -d "$SOURCE_DIR/.git" ]] || die "no patched Codex checkout at $SOURCE_DIR; run ./install.sh first"
+# Upstream pins its compiler in rust-toolchain.toml. Distro Rust ignores the pin, and newer compilers
+# have failed on Codex (0.156.1 on Rust 1.98: "queries overflow the depth limit"). Prefer rustup.
+if [[ -x "$HOME/.cargo/bin/rustup" ]]; then
+  PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 for tool in git cargo rustc; do
   command -v "$tool" >/dev/null || die "$tool not found; install it before updating (see ./install.sh --help)"
 done
