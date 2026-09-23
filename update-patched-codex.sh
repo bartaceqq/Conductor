@@ -182,6 +182,16 @@ if ! CARGO_PROFILE_RELEASE_DEBUG=none \
   die "build failed on $TARGET_TAG; the installed binary was not touched (rebased branch kept as $WORK_BRANCH)"
 fi
 
+# Cargo rewrites the workspace versions in Cargo.lock after a rebase onto a new tag. Commit that to
+# the patch branch, or the next update would refuse to start on an "uncommitted" source tree.
+cd "$SOURCE_DIR"
+if ! git diff --quiet -- codex-rs/Cargo.lock; then
+  git -c "user.name=$(git config user.name || echo 'Conductor Updater')" \
+      -c "user.email=$(git config user.email || echo 'conductor-updater@localhost')" \
+      commit -q -m "Refresh Cargo.lock for $TARGET_TAG" -- codex-rs/Cargo.lock
+fi
+cd "$RUST_DIR"
+
 say "Running the /effort tests"
 if ! bash "$PROJECT_DIR/bin/run-effort-tests.sh"; then
   cd "$SOURCE_DIR"
