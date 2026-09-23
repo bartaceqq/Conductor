@@ -82,11 +82,11 @@ fi
 
 # ------------------------------------------------------------------ auto-update timer
 UNIT_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user"
-if [[ -f "$UNIT_DIR/conductor-autoupdate.timer" ]]; then
-  systemctl --user disable --now conductor-autoupdate.timer >/dev/null 2>&1 || true
-  rm -f "$UNIT_DIR/conductor-autoupdate.timer" "$UNIT_DIR/conductor-autoupdate.service"
+if [[ -f "$UNIT_DIR/conductor-autoupdate.timer" || -f "$UNIT_DIR/conductor-autoupdate.path" ]]; then
+  systemctl --user disable --now conductor-autoupdate.timer conductor-autoupdate.path >/dev/null 2>&1 || true
+  rm -f "$UNIT_DIR"/conductor-autoupdate.{timer,path,service}
   systemctl --user daemon-reload 2>/dev/null || true
-  say "removed the auto-update timer"
+  say "removed the auto-update timer and npm watcher"
 fi
 
 # ------------------------------------------------------------------ assets

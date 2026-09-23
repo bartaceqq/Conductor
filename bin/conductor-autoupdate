@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Keep the patched Codex on the newest upstream release, unattended.
 #
-# Run daily by the conductor-autoupdate systemd user timer that install.sh sets up. It does nothing
+# Run daily by the conductor-autoupdate systemd user timer, and whenever npm changes @openai/codex
+# (conductor-autoupdate.path), both set up by install.sh. It does nothing
 # when the installed build already matches the newest stable rust-v* tag; otherwise it runs
 # update-patched-codex.sh at idle priority, which only installs a build that compiled and passed
 # the /effort tests. A tag that failed is not retried until a newer one appears (or --force).
@@ -60,6 +61,7 @@ if [[ "$FORCE" == 0 && -f "$FAILED_FILE" && "$(cat "$FAILED_FILE")" == "$latest"
 fi
 
 log "updating ${installed:-<none>} -> ${latest#rust-v}"
+notify "Conductor is updating" "Building patched Codex ${latest#rust-v} in the background. ${installed:-The current build} keeps working until it is done."
 low_priority=(nice -n 19)
 command -v ionice >/dev/null && low_priority+=(ionice -c 3)
 if "${low_priority[@]}" env CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-2}" \
