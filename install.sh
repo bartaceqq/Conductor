@@ -32,16 +32,19 @@ esac
 
 SKIP_BUILD=0
 MAX_AGENTS=4
+AUTO_UPDATE=1
 for arg in "$@"; do
   case "$arg" in
     --skip-build) SKIP_BUILD=1 ;;
     --max-agents=*) MAX_AGENTS="${arg#*=}" ;;
+    --no-auto-update) AUTO_UPDATE=0 ;;
     -h|--help)
       sed -n '2,8p' "${BASH_SOURCE[0]}"
       echo
-      echo "Usage: install.sh [--skip-build] [--max-agents=N]"
-      echo "  --skip-build    reuse an existing release build instead of compiling"
-      echo "  --max-agents=N  value written to [agents].max_concurrent_threads_per_session"
+      echo "Usage: install.sh [--skip-build] [--max-agents=N] [--no-auto-update]"
+      echo "  --skip-build      reuse an existing release build instead of compiling"
+      echo "  --max-agents=N    value written to [agents].max_concurrent_threads_per_session"
+      echo "  --no-auto-update  do not install the daily systemd timer that follows upstream releases"
       echo
       echo "Environment:"
       echo "  CODEX_ORCHESTRATOR_BIN_DIR  where to install the 'codex' symlink (default ~/.local/bin)"
@@ -343,6 +346,46 @@ if [[ -f "$PROJECT_DIR/bin/codex-orchestrator-sync" ]]; then
     warn "Start 'codex' once so it caches your account's model list, then re-run:"
     warn "    $PROJECT_DIR/bin/codex-orchestrator-sync"
   fi
+fi
+
+# ---------------------------------------------------------------- auto-update
+# A daily systemd user timer runs bin/conductor-autoupdate, which rebases, builds, tests and
+# installs new upstream releases on its own. Linux with a systemd user session only.
+UNIT_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user"
+if [[ "$AUTO_UPDATE" == 1 ]] && command -v systemctl >/dev/null \
+   && systemctl --user show-environment >/dev/null 2>&1; then
+  say "Installing the daily auto-update timer"
+  mkdir -p "$UNIT_DIR"
+  cat >"$UNIT_DIR/conductor-autoupdate.service" <<UNIT
+[Unit]
+Description=Rebase, build, test and install the Conductor patched Codex on new upstream releases
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment=PATH=$BIN_DIR:$HOME/.cargo/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=$PROJECT_DIR/bin/conductor-autoupdate
+Nice=19
+TimeoutStartSec=6h
+UNIT
+  cat >"$UNIT_DIR/conductor-autoupdate.timer" <<UNIT
+[Unit]
+Description=Check daily for a new upstream Codex release for Conductor
+
+[Timer]
+OnBootSec=15min
+OnCalendar=daily
+RandomizedDelaySec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+UNIT
+  systemctl --user daemon-reload
+  systemctl --user enable --now conductor-autoupdate.timer >/dev/null
+elif [[ "$AUTO_UPDATE" == 1 ]]; then
+  warn "no systemd user session; run $PROJECT_DIR/bin/conductor-autoupdate yourself (e.g. from cron)"
 fi
 
 # ---------------------------------------------------------------- report

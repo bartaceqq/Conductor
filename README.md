@@ -421,8 +421,35 @@ $ ./update-patched-codex.sh --dry-run    # rebase + build + test, do not install
 
 It fetches upstream, saves your current patch branch as `…-backup-<timestamp>`, rebases onto the
 target tag on a fresh branch, builds, runs `bin/run-effort-tests.sh`, and **installs only if all of
-that passed**. A rebase conflict, a build failure or a test failure leaves the installed binary
-exactly as it was and prints the commands to finish the rebase by hand.
+that passed**. A build failure or a test failure leaves the installed binary exactly as it was.
+
+Upstream tags every release on its own branch, so the updater replays only the patch commits
+(`git rebase --onto <new-tag> <old-tag>`). When they conflict — usually both sides added entries
+to the same enum, `match` or `mod` list — it hands the conflicted files to `claude -p` (or
+`codex exec` when Claude Code is not installed) and then continues. Choose with
+`--resolver=claude|codex|none`. An AI resolution gets no special trust: it still has to build and
+pass the tests before anything is installed. With `--resolver=none`, or when the resolver fails, the
+rebase is aborted and the commands to finish it by hand are printed.
+
+### Automatic updates
+
+On Linux, `install.sh` also enables a systemd user timer (`--no-auto-update` skips it):
+
+```console
+$ systemctl --user list-timers conductor-autoupdate.timer
+$ journalctl --user -u conductor-autoupdate          # or: ~/.local/state/conductor/autoupdate.log
+$ bin/conductor-autoupdate                           # run a check now
+$ bin/conductor-autoupdate --force                   # retry a release that failed before
+```
+
+Once a day (and 15 minutes after boot), `bin/conductor-autoupdate` fetches upstream tags. If there is
+a stable release newer than the installed build, it runs `update-patched-codex.sh` at idle CPU and
+I/O priority with `CARGO_BUILD_JOBS=2`, then shows a desktop notification with the result. A
+release that failed is not retried until a newer one appears or you pass `--force`. Your working
+build stays installed the whole time.
+
+Do not update with `npm i -g @openai/codex`: the npm copy sits behind `~/.local/bin/codex` on PATH,
+and bypassing the symlink drops the patch.
 
 ---
 
@@ -519,6 +546,7 @@ small and rebasable.
 ├── skill/                     the routing skill installed into $CODEX_HOME/skills
 ├── bin/
 │   ├── codex-orchestrator-sync    model discovery + role rendering + managed config blocks
+│   ├── conductor-autoupdate       daily unattended update, run by the systemd timer
 │   └── run-effort-tests.sh        the test gate used by the updater
 ├── bench/
 │   ├── run-benchmark.sh

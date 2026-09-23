@@ -80,6 +80,15 @@ if [[ -n "$restored" && -f "$restored" && -x "$restored" && ! -e "$BIN_DIR/codex
   say "restored $BIN_DIR/codex$EXE from $restored"
 fi
 
+# ------------------------------------------------------------------ auto-update timer
+UNIT_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user"
+if [[ -f "$UNIT_DIR/conductor-autoupdate.timer" ]]; then
+  systemctl --user disable --now conductor-autoupdate.timer >/dev/null 2>&1 || true
+  rm -f "$UNIT_DIR/conductor-autoupdate.timer" "$UNIT_DIR/conductor-autoupdate.service"
+  systemctl --user daemon-reload 2>/dev/null || true
+  say "removed the auto-update timer"
+fi
+
 # ------------------------------------------------------------------ assets
 for role in explorer_low verifier_low implementer_medium debugger_high architect_high; do
   if [[ -f "$CODEX_HOME/agents/$role.toml" ]]; then

@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# Keep the patched Codex on the newest upstream release, unattended.
+#
+# Run daily by the conductor-autoupdate systemd user timer that install.sh sets up. It does nothing
+# when the installed build already matches the newest stable rust-v* tag; otherwise it runs
+# update-patched-codex.sh at idle priority, which only installs a build that compiled and passed
+# the /effort tests. A tag that failed is not retried until a newer one appears (or --force).
+set -euo pipefail
+
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SOURCE_DIR="$PROJECT_DIR/codex"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/conductor"
+LOG="$STATE_DIR/autoupdate.log"
+FAILED_FILE="$STATE_DIR/failed-tag"
+
+FORCE=0
+for arg in "$@"; do
+  case "$arg" in
+    --force) FORCE=1 ;;
+    -h|--help)
+      sed -n '2,7p' "${BASH_SOURCE[0]}"
+      echo
+      echo "Usage: conductor-autoupdate [--force]"
+      echo "  --force  retry a release whose update failed before"
+      exit 0
+      ;;
+    *) echo "conductor-autoupdate: unknown argument: $arg" >&2; exit 2 ;;
+  esac
+done
+
+mkdir -p "$STATE_DIR"
+exec 9>"$STATE_DIR/lock"
+if ! flock -n 9; then
+  echo "conductor-autoupdate: another update is already running"
+  exit 0
+fi
+
+log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG"; }
+notify() {
+  command -v notify-send >/dev/null || return 0
+  notify-send -a Conductor -i "${3:-software-update-available}" "$1" "$2" 2>/dev/null || true
+}
+
+git -C "$SOURCE_DIR" fetch --tags --quiet origin
+latest="$(git -C "$SOURCE_DIR" tag --list 'rust-v*' --sort=-v:refname \
+  | grep -E '^rust-v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)"
+installed="$("$PROJECT_DIR/pkg/bin/codex" --version 2>/dev/null | awk '{print $NF}' || true)"
+
+if [[ -z "$latest" ]]; then
+  log "could not determine the newest upstream tag"
+  exit 1
+fi
+if [[ "rust-v$installed" == "$latest" ]]; then
+  log "up to date (${installed})"
+  exit 0
+fi
+if [[ "$FORCE" == 0 && -f "$FAILED_FILE" && "$(cat "$FAILED_FILE")" == "$latest" ]]; then
+  log "skipping $latest: its update failed before (run with --force to retry)"
+  exit 0
+fi
+
+log "updating ${installed:-<none>} -> ${latest#rust-v}"
+low_priority=(nice -n 19)
+command -v ionice >/dev/null && low_priority+=(ionice -c 3)
+if "${low_priority[@]}" env CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-2}" \
+     "$PROJECT_DIR/update-patched-codex.sh" --tag="$latest" --force >>"$LOG" 2>&1; then
+  rm -f "$FAILED_FILE"
+  log "installed ${latest#rust-v}"
+  notify "Conductor updated" "Patched Codex is now ${latest#rust-v}."
+else
+  printf '%s\n' "$latest" >"$FAILED_FILE"
+  log "update to ${latest#rust-v} failed; still on ${installed:-<none>}"
+  notify "Conductor update failed" "Still on ${installed:-<none>}. Details: $LOG" dialog-warning
+  exit 1
+fi
